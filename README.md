@@ -234,21 +234,6 @@ See [InspectionAgent README](agents/InspectionAgent/README.md) for details on ve
 
 ---
 
-## Supported Models
-
-ResearchGym uses [LiteLLM](https://docs.litellm.ai/docs/providers) for multi-provider support:
-
-| Provider | Example Models |
-|----------|---------------|
-| OpenAI | `openai/gpt-4o`, `openai/gpt-4o-mini`, `openai/o1` |
-| Anthropic | `anthropic/claude-sonnet-4-20250514`, `anthropic/claude-3-haiku` |
-| Google | `google/gemini-2.5-flash-lite`, `google/gemini-1.5-pro` |
-| Azure | `openai/azure/gpt-4o` (requires `AZURE_OPENAI_*` env vars) |
-
-See [LiteLLM providers](https://docs.litellm.ai/docs/providers) for the full list.
-
----
-
 ## Run Artifacts
 
 Each run produces artifacts in `runs/{YYYY-MM-DD}/{run_id}/`:
