@@ -1,0 +1,32 @@
+.env
+skeleton_tasks/
+original_tasks/
+__pycache__/
+runs/
+.DS_Store
+runs/
+logs/
+*.md
+!CLAUDE.md
+!README.md
+!behaviour_documentation.md
+!agents/**/README.md
+results/
+openevolve/
+ConceptAttention/
+daam/
+
+# Model checkpoints and weights
+*.pth
+*.pt
+*.ckpt
+# Large local datasets and weights (avoid staging GBs)
+dataset/
+weights/
+*.tar.gz
+*.zip
+*.rar
+
+# Global Claude API spend tracking (temporary)
+.claude_api_spend.json
+nul

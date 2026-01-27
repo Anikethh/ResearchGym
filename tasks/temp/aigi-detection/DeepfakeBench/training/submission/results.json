@@ -1,0 +1,31 @@
+{
+  "deepfake_protocol_1":,
+{
+  "protocol": "cross-dataset",
+  "metric": "video_auc",
+  "datasets": {
+    "Celeb-DF-v2": 0.7330138797091871
+  },
+  "avg": 0.733014
+}
+,
+  "deepfake_protocol_2":,
+{
+  "protocol": "df40-cross-method",
+  "metric": "video_auc",
+  "datasets": {
+
+  },
+  "avg": null
+}
+,
+  "ufd_map":,
+null
+,
+  "ufd_macc":,
+null
+,
+  "peft_frame_auc":,
+null
+
+}

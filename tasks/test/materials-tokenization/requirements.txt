@@ -1,0 +1,9 @@
+torch
+transformers
+datasets
+tokenizers
+scikit-learn
+pandas
+tqdm
+numpy
+python-Levenshtein

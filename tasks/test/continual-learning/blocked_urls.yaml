@@ -1,0 +1,72 @@
+# blocked_urls.yaml for CL (Continual Learning)
+# Paper: "SD-LoRA: Scalable Decoupled Low-Rank Adaptation for Class Incremental Learning" - ICLR 2025 Oral
+# Authors: Yichen Wu et al.
+
+urls:
+  # arXiv
+  - arxiv.org/abs/2501.13198
+  - arxiv.org/pdf/2501.13198
+  - arxiv.org/html/2501.13198
+  - arxiv.org/html/2501.13198v2
+  - arxiv.org/html/2501.13198v3
+  - arxiv.org/abs/2501.13198v2
+  - export.arxiv.org/abs/2501.13198
+
+  # OpenReview
+  - openreview.net/forum?id=5U1rlpX68A
+  - openreview.net/pdf?id=5U1rlpX68A
+
+  # ICLR Proceedings
+  - proceedings.iclr.cc/paper_files/paper/2025/file/92f43b1d33fae4aa1958f75317f0cec1-Paper-Conference.pdf
+
+  # GitHub - Official Implementation
+  - github.com/WuYichen-97/SD-Lora-CL
+
+  # Author's other related repos
+  - github.com/WuYichen-97/Meta-Continual-Learning-Revisited-ICLR2024
+
+  # Author website
+  - wuyichen-97.github.io/
+
+  # ICLR Virtual
+  - iclr.cc/virtual/2025/oral/31918
+  - iclr.cc/virtual/2025/session/31951
+
+  # AI Paper Aggregators
+  - liner.com/review/sdlora-scalable-decoupled-lowrank-adaptation-for-class-incremental-learning
+
+  # Awesome lists
+  - github.com/xialeiliu/Awesome-Incremental-Learning
+
+  # Papers With Code
+  - paperswithcode.com/paper/sd-lora-scalable-decoupled-low-rank
+
+  # Semantic Scholar
+  - semanticscholar.org/paper/SD-LoRA-Scalable-Decoupled-Low-Rank-Adaptation
+
+patterns:
+  # Paper title patterns
+  - "*SD-LoRA*class*incremental*"
+  - "*scalable*decoupled*low-rank*adaptation*"
+  - "*SD-Lora-CL*"
+
+  # Author patterns
+  - "*WuYichen-97*"
+  - "*github.com/WuYichen-97*"
+  - "*wuyichen-97.github.io*"
+
+  # arXiv pattern
+  - "*2501.13198*"
+
+  # OpenReview pattern
+  - "*5U1rlpX68A*"
+
+  # arXiv mirrors (specific to this paper's ID)
+  - "*ar5iv.org*2501.13198*"
+  - "*arxiv-vanity.com*2501.13198*"
+  - "*alphaxiv.org*2501.13198*"
+
+  # Cached/archived versions (specific to this paper)
+  - "*web.archive.org*2501.13198*"
+  - "*web.archive.org*WuYichen-97/SD-Lora-CL*"
+  - "*webcache.googleusercontent.com*2501.13198*"

@@ -1,0 +1,12 @@
+image_root: ./dataset/Fashion-Gen
+ann_root: ''
+dataset: fashion_gen_detail
+pretrained: ./weights/fashion_pretrained/finetuned_clip.pt
+backbone: clip
+vit: base
+vit_ckpt_layer: 4
+vit_grad_ckpt: true
+image_size: 384
+batch_size_image: 16
+batch_size_text: 16
+batch_size_total: 64

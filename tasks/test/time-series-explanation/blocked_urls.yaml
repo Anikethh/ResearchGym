@@ -1,0 +1,73 @@
+# blocked_urls.yaml for TIM (Time Series Explanation)
+# Paper: "TIMING: Temporality-Aware Integrated Gradients for Time Series Explanation" - ICML 2025 Spotlight
+# Authors: Hyeongwon Jang, Changhun Kim, Eunho Yang (KAIST, AITRICS)
+
+urls:
+  # arXiv
+  - arxiv.org/abs/2506.05035
+  - arxiv.org/pdf/2506.05035
+  - arxiv.org/html/2506.05035
+  - export.arxiv.org/abs/2506.05035
+
+  # OpenReview
+  - openreview.net/forum?id=qOgKMqv9T7
+  - openreview.net/pdf?id=qOgKMqv9T7
+  - openreview.net/pdf/0954dcf01dc5530aa1bb6655b8819ca54c401844.pdf
+
+  # GitHub - Official Implementation
+  - github.com/drumpt/TIMING
+
+  # Author GitHub profile
+  - github.com/drumpt
+
+  # ICML Virtual
+  - icml.cc/virtual/2025/poster/43941
+
+  # ICLR listing (cross-posted)
+  - iclr.cc/virtual/2025/35810
+
+  # Author website
+  - changhun.kim/
+
+  # ResearchGate
+  - researchgate.net/publication/392466435_TIMING_Temporality-Aware_Integrated_Gradients_for_Time_Series_Explanation
+
+  # AI Paper Aggregators
+  - themoonlight.io/en/review/timing-temporality-aware-integrated-gradients-for-time-series-explanation
+
+  # Papers With Code
+  - paperswithcode.com/paper/timing-temporality-aware-integrated-gradients
+  - paperswithcode.com/search?q=author:Changhun+Kim
+
+  # Semantic Scholar
+  - semanticscholar.org/paper/TIMING-Temporality-Aware-Integrated-Gradients
+
+  # DBLP
+  - dblp.org/pid/96/2621.html
+
+patterns:
+  # Paper title patterns
+  - "*TIMING*time*series*explanation*"
+  - "*temporality*aware*integrated*gradients*"
+  - "*TIMING*ICML*"
+
+  # Author/Lab patterns
+  - "*drumpt*TIMING*"
+  - "*github.com/drumpt*"
+  - "*changhun.kim*"
+
+  # arXiv pattern
+  - "*2506.05035*"
+
+  # OpenReview pattern
+  - "*qOgKMqv9T7*"
+
+  # arXiv mirrors (specific to this paper's ID)
+  - "*ar5iv.org*2506.05035*"
+  - "*arxiv-vanity.com*2506.05035*"
+  - "*alphaxiv.org*2506.05035*"
+
+  # Cached/archived versions (specific to this paper)
+  - "*web.archive.org*2506.05035*"
+  - "*web.archive.org*drumpt/TIMING*"
+  - "*webcache.googleusercontent.com*2506.05035*"

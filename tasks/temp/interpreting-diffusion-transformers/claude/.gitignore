@@ -1,0 +1,7 @@
+*.png
+*.pyc
+*.pyc
+src/
+.vscode/
+*.mov
+*.mp4

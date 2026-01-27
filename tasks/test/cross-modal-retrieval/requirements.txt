@@ -1,0 +1,14 @@
+gdown
+transformers
+einops
+tqdm
+timm
+pycocotools
+pycocoevalcap
+cython
+ruamel.yaml
+ftfy
+regex
+fairscale
+packaging
+kagglehub

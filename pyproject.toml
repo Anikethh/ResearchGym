@@ -1,0 +1,61 @@
+[project]
+name = "researchgym"
+version = "0.1.0"
+description = "Research environment for ML agents"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "python-dotenv>=1.0.0",
+    "openai>=1.0.0",
+    "litellm[proxy]>=1.0.0",
+    "google-generativeai>=0.8.0",
+    "anthropic>=0.20.0",
+    "tenacity>=8.0.0",
+    "httpx>=0.25.0",
+    "pyyaml>=6.0.0",
+    "shortuuid>=1.0.13",
+    "jsonlines>=4.0.0",
+    "aiohttp>=3.12.15",
+    "beautifulsoup4>=4.13.5",
+    "click>=8.2.1",
+    "debugpy>=1.8.16",
+    "docstring-parser>=0.17.0",
+    "ijson>=3.4.0",
+    "jsonschema>=4.25.1",
+    "mmh3>=5.2.0",
+    "nest-asyncio>=1.6.0",
+    "numpy>=2.3.3",
+    "platformdirs>=4.4.0",
+    "psutil>=7.0.0",
+    "pydantic>=2.11.7",
+    "rich>=13.7.1",
+    "s3fs>=2025.9.0",
+    "semver>=3.0.4",
+    "textual>=6.1.0",
+    "typing-extensions>=4.15.0",
+    "anyio>=4.10.0",
+    "jsonpatch>=1.33",
+    "inspect-ai>=0.3.66",
+    "inspect-tool-support>=1.2.0",
+    "codex-apply-patch>=0.4.0",
+    "matplotlib>=3.10.7",
+    "exa-py>=2.0.0",
+    "claude-agent-sdk>=0.1.20",
+    "langfuse>=3.12.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
+
+[tool.uv.workspace]
+members = [
+    "runs/2025-10-06/dd399cc4/workspace/input/new",
+    "runs/2025-10-06/dd399cc4/workspace/input",
+]
+
+[project.scripts]
+rg-monitor = "ResearchGym.monitor.run_monitor:main"

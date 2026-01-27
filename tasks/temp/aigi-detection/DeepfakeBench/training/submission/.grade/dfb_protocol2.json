@@ -1,0 +1,8 @@
+{
+  "protocol": "df40-cross-method",
+  "metric": "video_auc",
+  "datasets": {
+
+  },
+  "avg": null
+}

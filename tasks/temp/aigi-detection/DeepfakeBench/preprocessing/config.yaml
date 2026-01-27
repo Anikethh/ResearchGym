@@ -1,0 +1,13 @@
+preprocess:
+  dataset_name:
+    default: 'Celeb-DF-v2'
+  dataset_root_path:
+    default: '../dataset'
+  comp:
+    default: 'c23'
+  mode:
+    default: 'fixed_num_frames'
+  num_frames:
+    default: 32
+  stride:
+    default: 1

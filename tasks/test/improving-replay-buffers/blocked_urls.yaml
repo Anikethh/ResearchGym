@@ -1,0 +1,70 @@
+# blocked_urls.yaml for IRB (Improving Replay Buffers)
+# Paper: "Prioritized Generative Replay" - ICLR 2025 Oral
+# Authors: Renhao Wang, Kevin Frans, Pieter Abbeel, Sergey Levine, Alexei A. Efros
+
+urls:
+  # arXiv
+  - arxiv.org/abs/2410.18082
+  - arxiv.org/pdf/2410.18082
+  - arxiv.org/html/2410.18082
+  - arxiv.org/html/2410.18082v1
+  - arxiv.org/html/2410.18082v2
+  - arxiv.org/abs/2410.18082v1
+  - export.arxiv.org/abs/2410.18082
+
+  # OpenReview
+  - openreview.net/forum?id=5IkDAfabuo
+  - openreview.net/pdf?id=5IkDAfabuo
+
+  # ICLR Proceedings
+  - proceedings.iclr.cc/paper_files/paper/2025/file/74b7956113fdf0ec87288f351a1d8a34-Paper-Conference.pdf
+  - proceedings.iclr.cc/paper_files/paper/2025/hash/74b7956113fdf0ec87288f351a1d8a34-Abstract-Conference.html
+
+  # GitHub - Official Implementation
+  - github.com/renwang435/pgr
+
+  # Project Page
+  - pgenreplay.github.io/
+
+  # Papers With Code
+  - paperswithcode.com/paper/prioritized-generative-replay
+
+  # ResearchGate
+  - researchgate.net/publication/385177746_Prioritized_Generative_Replay
+
+  # AI Paper Aggregators
+  - aimodels.fyi/papers/arxiv/prioritized-generative-replay
+  - themoonlight.io/en/review/prioritized-generative-replay
+
+  # Semantic Scholar
+  - semanticscholar.org/paper/Prioritized-Generative-Replay
+
+patterns:
+  # Paper title patterns
+  - "*prioritized*generative*replay*"
+  - "*PGR*generative*replay*"
+  - "*pgenreplay*"
+
+  # Author patterns
+  - "*renwang435*pgr*"
+  - "*github.com/renwang435*"
+
+  # Project page pattern
+  - "*pgenreplay.github.io*"
+
+  # arXiv pattern
+  - "*2410.18082*"
+
+  # OpenReview pattern
+  - "*5IkDAfabuo*"
+
+  # arXiv mirrors (specific to this paper's ID)
+  - "*ar5iv.org*2410.18082*"
+  - "*arxiv-vanity.com*2410.18082*"
+  - "*alphaxiv.org*2410.18082*"
+
+  # Cached/archived versions (specific to this paper)
+  - "*web.archive.org*2410.18082*"
+  - "*web.archive.org*renwang435/pgr*"
+  - "*web.archive.org*pgenreplay*"
+  - "*webcache.googleusercontent.com*2410.18082*"

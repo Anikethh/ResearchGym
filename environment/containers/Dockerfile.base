@@ -1,0 +1,33 @@
+FROM python:3.12-slim
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git git-lfs curl ca-certificates build-essential procps tini \
+    # Add GPU detection tools
+    pciutils lshw \
+ && rm -rf /var/lib/apt/lists/* \
+ && git lfs install
+
+# Install uv
+RUN pip install --no-cache-dir uv
+
+# LLM tooling: OpenAI client for compatibility, LiteLLM proxy server, Gemini SDK, dotenv
+RUN pip install --no-cache-dir openai litellm python-dotenv
+
+# Copy GPU detection and installation scripts
+COPY environment/scripts/ /opt/researchgym/scripts/
+RUN chmod +x /opt/researchgym/scripts/*.sh
+
+# Add scripts to PATH
+ENV PATH="/opt/researchgym/scripts:$PATH"
+
+WORKDIR /workspace
+
+ENTRYPOINT ["tini", "--"]
+CMD ["bash"]
+
+

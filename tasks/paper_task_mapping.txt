@@ -1,0 +1,11 @@
+3d-object-detection: Learning-Class-Prototypes-for-Unified-Sparse-Supervised-3D-Object-Detection
+aigi-detection: Orthogonal-Subspace-Decomposition-for-Generalizable-AI-Generated-Image-Detection
+sd-lora: SD-LoRA-Scalable-Decoupled-Low-Rank-Adaptation-for-Class-Incremental-Learning
+materials-tokenization: Incorporating-Domain-Knowledge-into-Materials-Tokenization
+
+faithful-rag: FaithfulRAG-Fact-Level-Conflict-Modeling-for-Context-Faithful-Retrieval-Augmented-Generation
+equation-discovery: LLM-SR-Scientific-Equation-Discovery-via-Programming-with-Large-Language-Models
+ood-detection: Overcoming-Shortcut-Problem-in-VLM-for-Robust-Out-of-Distribution-Detection
+improving-replay-buffers: Prioritized-Generative-Replay
+time-series-explanation: TIMING-Temporality-Aware-Integrated-Gradients-for-Time-Series-Explanation
+cross-modal-retrieval: Test-time-Adaptation-for-Cross-modal-Retrieval-with-Query-Shift

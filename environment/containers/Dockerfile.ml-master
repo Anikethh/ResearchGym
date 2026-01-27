@@ -1,0 +1,15 @@
+FROM researchgym-base:latest
+
+
+COPY agents/ML-Master/requirements.txt /tmp/requirements.txt
+RUN install_requirements.sh /tmp/requirements.txt python
+
+# Clean up
+RUN rm -f /tmp/requirements*.txt
+
+WORKDIR /workspace
+
+ENTRYPOINT ["tini", "--"]
+CMD ["bash"]
+
+

@@ -1,0 +1,62 @@
+# blocked_urls.yaml for MDT (Materials Tokenization)
+# Paper: "Incorporating Domain Knowledge into Materials Tokenization" - ACL 2025
+# Authors: Yerim Oh, Jun-Hyung Park, Junho Kim, SungHo Kim, SangKeun Lee
+
+urls:
+  # arXiv
+  - arxiv.org/abs/2506.11115
+  - arxiv.org/pdf/2506.11115
+  - arxiv.org/html/2506.11115
+  - export.arxiv.org/abs/2506.11115
+
+  # ACL Anthology
+  - aclanthology.org/2025.acl-long.474/
+  - aclanthology.org/2025.acl-long.474.pdf
+  - aclanthology.org/2025.acl-long.474.bib
+
+  # GitHub - Official Implementation
+  - github.com/yerimoh/MATTER
+
+  # Hugging Face
+  - huggingface.co/papers/2506.11115
+
+  # AI Paper Aggregators
+  - aimodels.fyi/papers/arxiv/incorporating-domain-knowledge-into-materials-tokenization
+  - chatpaper.ai/dashboard/paper/8711878f-d4ee-4598-9c7e-24b4da5420f9
+  - catalyzex.com/s/Tokenization
+
+  # Semantic Scholar
+  - semanticscholar.org/paper/Incorporating-Domain-Knowledge-into-Materials
+
+  # Papers With Code
+  - paperswithcode.com/paper/incorporating-domain-knowledge-into-materials
+
+  # Connected Papers
+  - connectedpapers.com/main/incorporating-domain-knowledge-into-materials
+
+patterns:
+  # Paper title patterns
+  - "*MATTER*tokenization*"
+  - "*materials*tokenization*ACL*"
+  - "*MatDetector*"
+  - "*domain*knowledge*materials*tokenization*"
+
+  # Author patterns
+  - "*yerimoh*MATTER*"
+  - "*github.com/yerimoh*"
+
+  # arXiv pattern
+  - "*2506.11115*"
+
+  # ACL pattern
+  - "*acl-long.474*"
+
+  # arXiv mirrors (specific to this paper's ID)
+  - "*ar5iv.org*2506.11115*"
+  - "*arxiv-vanity.com*2506.11115*"
+  - "*alphaxiv.org*2506.11115*"
+
+  # Cached/archived versions (specific to this paper)
+  - "*web.archive.org*2506.11115*"
+  - "*web.archive.org*yerimoh/MATTER*"
+  - "*webcache.googleusercontent.com*2506.11115*"

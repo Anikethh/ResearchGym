@@ -1,0 +1,12 @@
+image_root: ./dataset/coco/coco_image
+ann_root: ./dataset/coco-TP/annotation_KeyboardAug/7/
+dataset: coco
+pretrained: ./weights/blip/model_base_retrieval_coco.pth
+backbone: blip
+vit: base
+vit_ckpt_layer: 4
+vit_grad_ckpt: true
+image_size: 384
+batch_size_image: 16
+batch_size_text: 16
+batch_size_total: 64

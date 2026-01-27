@@ -1,0 +1,12 @@
+image_root: ./dataset/coco-IP/COCO_IP_fog_5
+ann_root: ./dataset/coco/coco_annotations/
+dataset: coco
+pretrained: ./weights/blip/model_large_retrieval_coco.pth
+backbone: blip
+vit: large
+vit_ckpt_layer: 12
+vit_grad_ckpt: true
+image_size: 384
+batch_size_image: 16
+batch_size_text: 16
+batch_size_total: 64

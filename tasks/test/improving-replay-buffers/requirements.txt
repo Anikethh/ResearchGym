@@ -1,0 +1,23 @@
+accelerate
+einops
+ema-pytorch
+Cython==0.29.36
+numpy
+pillow
+pytorch-fid
+torch
+torchdiffeq
+gym[mujoco_py,classic_control]==0.23.0
+git+https://github.com/Farama-Foundation/d4rl@master#egg=d4rl
+tqdm
+mujoco==2.2.1
+mujoco-py==2.1.2.14
+sortedcontainers
+pyrallis
+gin-config
+h5py
+dm-control @ git+https://github.com/deepmind/dm_control@f4e5e2336991017361f563db7e676fd08857076f
+dm-env
+dm-tree
+dmcgym @ git+https://github.com/conglu1997/dmcgym.git@812905790dd87a448c9544a0beccb8b05ea2a850
+git+https://github.com/watchernyu/REDQ.git@3a2763889223677d74c734864244c41494e4832c#egg=redq

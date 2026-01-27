@@ -1,0 +1,13 @@
+Total number of trainable parameters in the model: 21861162
+===> Load checkpoint done!
+dataset: Celeb-DF-v2
+acc: 0.5552375152253349
+auc: 0.6840281484776591
+eer: 0.3724199288256228
+ap: 0.7886367840639721
+pred: [0.48476964 0.4697182  0.32189885 ... 0.6057558  0.42755222 0.5870698 ]
+video_auc: 0.7330138797091871
+video_eer: 0.3258426966292135
+video_acc: 0.5907335907335908
+label: [0 1 1 ... 1 0 0]
+===> Test Done!

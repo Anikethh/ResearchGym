@@ -1,0 +1,12 @@
+image_root: ./dataset/flickr-IP/Flickr30K_IP_motion_blur_2
+ann_root: ./dataset/flickr/flickr_annotations/
+dataset: flickr
+pretrained: ./weights/blip/model_large_retrieval_flickr.pth
+backbone: blip
+vit: large
+vit_ckpt_layer: 10
+vit_grad_ckpt: true
+image_size: 384
+batch_size_image: 16
+batch_size_text: 16
+batch_size_total: 64

@@ -1,0 +1,22 @@
+FROM researchgym-base:latest
+
+COPY agents/BasicAgent/requirements.txt /tmp/requirements.txt
+RUN install_requirements.sh /tmp/requirements.txt python
+
+# Install inspect_tool_support to enable web browser/computer tools
+# RUN python -m venv /opt/inspect_tool_support \
+#  && /opt/inspect_tool_support/bin/pip install --no-cache-dir inspect-tool-support \
+#  && /opt/inspect_tool_support/bin/inspect-tool-support post-install
+
+# Ensure inspect-tool-support CLI is on PATH for inspect_ai sandbox detection
+# ENV PATH="/opt/inspect_tool_support/bin:$PATH"
+
+# Clean up
+RUN rm -f /tmp/requirements*.txt
+
+WORKDIR /workspace
+
+ENTRYPOINT ["tini", "--"]
+CMD ["bash"]
+
+

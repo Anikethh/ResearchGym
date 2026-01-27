@@ -1,0 +1,27 @@
+Key conflicts between Claude and GPT skeleton modifications:
+
+1. Baseline module organization:
+   - Claude: Created new baseline_segmentation/ module with segmentation_base.py abstract class
+   - GPT: Kept baselines under binary_segmentation_baselines/ directory structure
+
+2. Segmentation interface location:
+   - Claude: Moved to baseline_segmentation.segmentation_base.SegmentationAbstractClass
+   - GPT: Simplified concept_attention/segmentation.py to neutral base class
+
+3. DINO baseline location:
+   - Claude: baseline_segmentation/dino_baseline.py with DINOSegmentationModel class
+   - GPT: binary_segmentation_baselines/dino.py with dino_src/ directory
+
+4. Package naming:
+   - Claude: Renamed package to diffusion_transformer_skeleton in setup.py
+   - GPT: Kept original package structure, sanitized requirements.txt only
+
+5. Module restructuring approach:
+   - Claude: Complete reorganization with new baseline_segmentation module and abstract classes
+   - GPT: Preserved original directory structure, simplified existing files
+
+6. Import structure changes:
+   - Claude: New import paths like baseline_segmentation.dino_baseline.DINOSegmentationModel
+   - GPT: Maintained original import structure with simplified implementations
+
+These differences make the two skeletons incompatible and would require different implementation approaches for new methods.

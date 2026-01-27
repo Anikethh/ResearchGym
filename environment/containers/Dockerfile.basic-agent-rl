@@ -1,0 +1,79 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+# Use bash for RUN so pipefail works
+SHELL ["/bin/bash", "-c"]
+
+# Core tooling, graphics deps, and multiple Python runtimes (3.10 for the agent, 3.8 for MuJoCo stacks)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    software-properties-common \
+    git git-lfs curl ca-certificates build-essential procps tini \
+    gcc g++ make cmake \
+    libopenmpi-dev libomp-dev \
+    libgl1 libgl1-mesa-dev libglu1-mesa libglew-dev libosmesa6-dev \
+    libglfw3 libglfw3-dev \
+    patchelf \
+    swig \
+    wget unzip \
+    gnupg dirmngr \
+    libxml2-dev libxslt1-dev zlib1g-dev \
+    libffi-dev pkg-config libhdf5-dev libhdf5-serial-dev hdf5-tools \
+    && add-apt-repository -y ppa:deadsnakes/ppa \
+    && apt-get update && apt-get install -y --no-install-recommends \
+       python3.10 python3.10-dev python3.10-venv \
+       python3.8 python3.8-dev python3.8-venv \
+       python3-pip python3-setuptools python3-wheel \
+    && rm -rf /var/lib/apt/lists/* \
+    && git lfs install
+
+# Prepare MuJoCo 2.1.0 assets expected by mujoco-py
+RUN mkdir -p /root/.mujoco && \
+    curl -sSL -o /tmp/mujoco210.tar.gz https://mujoco.org/download/mujoco210-linux-x86_64.tar.gz && \
+    tar -xzf /tmp/mujoco210.tar.gz -C /root/.mujoco && \
+    rm -f /tmp/mujoco210.tar.gz
+
+# Primary agent environment (Python 3.10)
+RUN python3.10 -m venv /opt/py310 && \
+    /opt/py310/bin/pip install --upgrade pip setuptools wheel && \
+    /opt/py310/bin/pip install uv openai litellm python-dotenv
+
+# Dedicated RL toolchain (Python 3.8) compatible with mujoco-py/d4rl
+RUN python3.8 -m venv /opt/rl-python && \
+    /opt/rl-python/bin/pip install --upgrade pip setuptools wheel
+
+ENV PATH="/opt/py310/bin:/opt/rl-python/bin:${PATH}"
+
+RUN ln -sf /opt/py310/bin/python /usr/local/bin/python && \
+    ln -sf /opt/py310/bin/pip /usr/local/bin/pip
+
+# Environment defaults for MuJoCo + headless rendering (needed during build/install)
+ENV RL_PYTHON=/opt/rl-python/bin/python \
+    RL_PIP=/opt/rl-python/bin/pip \
+    MUJOCO_PY_MUJOCO_PATH=/root/.mujoco/mujoco210 \
+    LD_LIBRARY_PATH=/root/.mujoco/mujoco210/bin:/usr/lib/x86_64-linux-gnu \
+    MUJOCO_GL=egl
+
+# Pre-install improving-replay-buffers deps into the RL interpreter to avoid runtime installs
+COPY tasks/test/improving-replay-buffers /tmp/improving-replay-buffers
+RUN set -euo pipefail \
+    && RL_PYTHON=/opt/rl-python/bin/python \
+    && REQ_FILE=/tmp/improving-replay-buffers/requirements.txt \
+    && mkdir -p /task \
+    && cp "${REQ_FILE}" /task/requirements.txt \
+    && pushd /tmp/improving-replay-buffers >/dev/null \
+    && SKIP_TASK_INSTALL=0 RL_PYTHON="${RL_PYTHON}" REQ_FILE="${REQ_FILE}" bash install.sh \
+    && popd >/dev/null \
+    && rm -rf /tmp/improving-replay-buffers
+
+# Handy shims for agents to access the RL interpreter
+RUN printf '#!/usr/bin/env bash\nexec /opt/rl-python/bin/python "$@"\n' > /usr/local/bin/rlpython && chmod +x /usr/local/bin/rlpython && \
+    printf '#!/usr/bin/env bash\nexec /opt/rl-python/bin/pip "$@"\n' > /usr/local/bin/rlpip && chmod +x /usr/local/bin/rlpip
+
+WORKDIR /workspace
+
+ENTRYPOINT ["tini", "--"]
+CMD ["bash"]

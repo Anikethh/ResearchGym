@@ -1,0 +1,17 @@
+image_root: ./dataset/nocaps/
+ann_root: ./dataset/nocaps
+dataset: nocaps_entire_domain
+pretrained: ./weights/blip/model_large.pth
+backbone: blip
+vit: large
+vit_ckpt_layer: 12
+vit_grad_ckpt: true
+image_size: 384
+batch_size_image: 16
+batch_size_text: 16
+batch_size_total: 64
+max_epoch: 1
+min_lr: 0
+negative_all_rank: false
+queue_size: 57600
+weight_decay: 5e-4

@@ -1,0 +1,14 @@
+FROM researchgym-base:latest
+
+
+COPY agents/AI-Scientist-v2/requirements.txt /tmp/requirements.txt
+RUN install_requirements.sh /tmp/requirements.txt python
+
+RUN rm -f /tmp/requirements*.txt
+
+WORKDIR /workspace
+
+ENTRYPOINT ["tini", "--"]
+CMD ["bash"]
+
+

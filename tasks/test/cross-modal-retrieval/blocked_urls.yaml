@@ -1,0 +1,70 @@
+# blocked_urls.yaml for CMR (Cross-Modal Retrieval)
+# Paper: "Test-time Adaptation for Cross-modal Retrieval with Query Shift" - ICLR 2025 Spotlight
+# Authors: Haobin Li, Peng Hu, Qianjun Zhang, Xi Peng, Xiting Liu, Mouxing Yang
+
+urls:
+  # arXiv
+  - arxiv.org/abs/2410.15624
+  - arxiv.org/pdf/2410.15624
+  - arxiv.org/html/2410.15624
+  - arxiv.org/html/2410.15624v1
+  - export.arxiv.org/abs/2410.15624
+
+  # OpenReview
+  - openreview.net/forum?id=BmG88rONaU
+  - openreview.net/pdf?id=BmG88rONaU
+
+  # GitHub - Official Implementation
+  - github.com/XLearning-SCU/2025-ICLR-TCR
+
+  # XLearning Group GitHub (related repos)
+  - github.com/XLearning-SCU
+
+  # ICLR Virtual
+  - iclr.cc/virtual/2025/poster/30549
+  - iclr.cc/media/iclr-2025/Slides/30549_xq3tcoa.pdf
+
+  # Author website
+  - pengxi.me/wp-content/uploads/2025/04/10708_Test_time_Adaptation_for.pdf
+  - penghu-cs.github.io/publications/
+
+  # AI Paper Aggregators
+  - aimodels.fyi/papers/arxiv/test-time-adaptation-cross-modal-retrieval-query
+  - themoonlight.io/en/review/test-time-adaptation-for-cross-modal-retrieval-with-query-shift
+
+  # Semantic Scholar
+  - semanticscholar.org/paper/Test-time-Adaptation-for-Cross-modal-Retrieval
+
+  # Papers With Code
+  - paperswithcode.com/paper/test-time-adaptation-for-cross-modal
+
+  # Awesome lists that mention TCR
+  - github.com/tim-learn/awesome-test-time-adaptation
+  - github.com/donghao51/Awesome-Multimodal-Adaptation
+
+patterns:
+  # Paper title patterns
+  - "*TCR*cross-modal*retrieval*"
+  - "*test-time*adaptation*cross-modal*"
+  - "*query*shift*cross-modal*"
+
+  # Author/Lab patterns
+  - "*XLearning-SCU*TCR*"
+  - "*github.com/XLearning-SCU/2025-ICLR-TCR*"
+  - "*pengxi.me*"
+
+  # arXiv pattern
+  - "*2410.15624*"
+
+  # OpenReview pattern
+  - "*BmG88rONaU*"
+
+  # arXiv mirrors (specific to this paper's ID)
+  - "*ar5iv.org*2410.15624*"
+  - "*arxiv-vanity.com*2410.15624*"
+  - "*alphaxiv.org*2410.15624*"
+
+  # Cached/archived versions (specific to this paper)
+  - "*web.archive.org*2410.15624*"
+  - "*web.archive.org*XLearning-SCU/2025-ICLR-TCR*"
+  - "*webcache.googleusercontent.com*2410.15624*"
