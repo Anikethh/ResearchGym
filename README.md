@@ -349,10 +349,7 @@ If you use ResearchGym in your research, please cite:
 
 ResearchGym tasks are derived from research papers published at ACL, ICML, and ICLR 2024-2025. We thank the original authors for making their code and datasets available.
 
-This project draws inspiration from:
-- [PaperBench](https://github.com/openai/preparedness/tree/main/project/paperbench) (OpenAI)
-- [RE-Bench](https://github.com/METR/RE-Bench) (METR)
-- [SWE-bench](https://github.com/princeton-nlp/SWE-bench) (Princeton NLP)
+This project draws inspiration from [PaperBench](https://github.com/openai/preparedness/tree/main/project/paperbench) (OpenAI) and [RE-Bench](https://github.com/METR/RE-Bench) (METR)
 
 ---
 
