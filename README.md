@@ -324,27 +324,6 @@ run_agent.py          # Main entry point
 
 ---
 
-## Citation
-
-If you use ResearchGym in your research, please cite:
-
-```bibtex
-@misc{researchgym2025,
-  title={ResearchGym: A Benchmark for Evaluating LLM Agents on Open-Ended AI Research Tasks},
-  author={},
-  year={2025},
-  url={https://github.com/YOUR_ORG/ResearchGym}
-}
-```
-
----
-
-## License
-
-*License to be determined.*
-
----
-
 ## Acknowledgments
 
 ResearchGym tasks are derived from research papers published at ACL, ICML, and ICLR 2024-2025. We thank the original authors for making their code and datasets available.
