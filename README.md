@@ -2,7 +2,7 @@
 
 **Evaluating LLM Agents on Open-Ended AI Research Tasks**
 
-ResearchGym is a benchmark for evaluating the ability of LLM agents to perform autonomous AI research. Unlike code completion or bug-fixing benchmarks, ResearchGym tasks require agents to understand research problems, design novel approaches, implement solutions, and run experiments—mirroring the full cycle of ML research.
+ResearchGym is a benchmark for evaluating the ability of LLM agents to perform autonomous AI research. Unlike code completion or bug-fixing benchmarks, ResearchGym tasks require agents to understand research problems, design novel approaches, implement solutions, and run experiments, mirroring the full cycle of AI research.
 
 Each task provides a research problem statement, a pruned code repository (evaluation scripts, datasets, baselines—no solution code), and baseline scores to beat. Agents run autonomously for 12-24 hours with a fixed API budget and are evaluated on objective score improvements over baselines.
 
@@ -155,7 +155,7 @@ python run_agent.py tasks/test/continual-learning rg-agent \
     --dry_run
 ```
 
-### GPU-Enabled Tasks (RL)
+### IRB (RL) Task
 
 ```bash
 python run_agent.py tasks/test/improving-replay-buffers rg-agent \
@@ -178,7 +178,6 @@ ResearchGym includes multiple agent implementations. See [agents/README.md](agen
 | **[InspectionAgent](agents/InspectionAgent/README.md)** | Post-run verification agent for detecting cheating/violations | Production |
 | **ML-Master** | MCTS-based multi-agent tree search for research exploration | Functional |
 | **AI-Scientist-v2** | Multi-worker evolutionary algorithm with code generation | Functional |
-| **OpenEvolve** | Google DeepMind AlphaEvolve-style evolution for optimization | Functional |
 | **ClaudeCode** | Claude Agent SDK wrapper | Experimental |
 | **Codex** | OpenAI Codex CLI wrapper | Experimental |
 
