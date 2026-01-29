@@ -6,8 +6,6 @@ ResearchGym is a benchmark for evaluating the ability of LLM agents to perform a
 
 Each task provides a research problem statement, a pruned code repository (evaluation scripts, datasets, baselines—no solution code), and baseline scores to beat. Agents run autonomously for 12-24 hours with a fixed API budget and are evaluated on objective score improvements over baselines.
 
----
-
 
 ## Overview
 
