@@ -29,7 +29,7 @@ ResearchGym addresses a key gap in AI evaluation: measuring an agent's ability t
 - **Autonomous Operation**: Agents run for 12-24 hours without human intervention, making real research decisions
 - **Budget Constraints**: $10 default API budget enforces efficient reasoning and experimentation
 - **Multiple Runtimes**: Local execution with `uv` for development, Docker containers for reproducible production runs
-- **Multi-Agent Support**: Includes BasicAgent (inspect_ai), ML-Master (MCTS), AI-Scientist-v2 (evolutionary), and OpenEvolve (AlphaEvolve-style)
+- **Multi-Agent Support**: Includes RGAgent (inspect_ai), ML-Master (MCTS), AI-Scientist-v2 (evolutionary), and OpenEvolve (AlphaEvolve-style)
 
 ---
 
@@ -106,8 +106,8 @@ Build the required Docker images:
 docker build -f environment/containers/Dockerfile.base -t researchgym-base:latest .
 
 # Agent images
-docker build -f environment/containers/Dockerfile.basic-agent -t researchgym-basic-agent:latest .
-docker build -f environment/containers/Dockerfile.basic-agent-rl -t researchgym-basic-agent-rl:latest .
+docker build -f environment/containers/Dockerfile.rg-agent -t researchgym-rg-agent:latest .
+docker build -f environment/containers/Dockerfile.rg-agent-rl -t researchgym-rg-agent-rl:latest .
 docker build -f environment/containers/Dockerfile.ml-master -t researchgym-ml-master:latest .
 ```
 
@@ -115,25 +115,25 @@ docker build -f environment/containers/Dockerfile.ml-master -t researchgym-ml-ma
 
 ## Quick Start
 
-### Run BasicAgent on a Task
+### Run RGAgent on a Task
 
 ```bash
 # Quick test (6 minutes, lightweight model)
-python run_agent.py tasks/test/continual-learning basic-agent \
+python run_agent.py tasks/test/continual-learning rg-agent \
     --runtime uv \
     --model google/gemini-2.5-flash-lite \
     --basic_hours 0.1
 
 # Standard run (12 hours, production model)
-python run_agent.py tasks/test/continual-learning basic-agent \
+python run_agent.py tasks/test/continual-learning rg-agent \
     --runtime uv \
     --model openai/gpt-4o \
     --basic_hours 12
 
 # Production run with Docker
-python run_agent.py tasks/test/continual-learning basic-agent \
+python run_agent.py tasks/test/continual-learning rg-agent \
     --runtime docker \
-    --image researchgym-basic-agent:latest \
+    --image researchgym-rg-agent:latest \
     --model anthropic/claude-sonnet-4-20250514 \
     --basic_hours 24
 ```
@@ -141,7 +141,7 @@ python run_agent.py tasks/test/continual-learning basic-agent \
 ### Resume a Run
 
 ```bash
-python run_agent.py tasks/test/continual-learning basic-agent \
+python run_agent.py tasks/test/continual-learning rg-agent \
     --runtime uv \
     --resume runs/2025-01-15/abcd1234 \
     --basic_hours 2
@@ -150,7 +150,7 @@ python run_agent.py tasks/test/continual-learning basic-agent \
 ### Dry Run (Plan Only)
 
 ```bash
-python run_agent.py tasks/test/continual-learning basic-agent \
+python run_agent.py tasks/test/continual-learning rg-agent \
     --runtime uv \
     --dry_run
 ```
@@ -158,9 +158,9 @@ python run_agent.py tasks/test/continual-learning basic-agent \
 ### GPU-Enabled Tasks (RL)
 
 ```bash
-python run_agent.py tasks/test/improving-replay-buffers basic-agent \
+python run_agent.py tasks/test/improving-replay-buffers rg-agent \
     --runtime docker \
-    --image researchgym-basic-agent-rl:latest \
+    --image researchgym-rg-agent-rl:latest \
     --model openai/gpt-4o \
     --basic_hours 12 \
     --gpus
@@ -174,7 +174,7 @@ ResearchGym includes multiple agent implementations. See [agents/README.md](agen
 
 | Agent | Description | Status |
 |-------|-------------|--------|
-| **[BasicAgent](agents/BasicAgent/README.md)** | Reference implementation using [inspect_ai](https://github.com/UKGovernmentBEIS/inspect_ai) with comprehensive tools | Production |
+| **[RGAgent](agents/RGAgent/README.md)** | Reference implementation using [inspect_ai](https://github.com/UKGovernmentBEIS/inspect_ai) with comprehensive tools | Production |
 | **[InspectionAgent](agents/InspectionAgent/README.md)** | Post-run verification agent for detecting cheating/violations | Production |
 | **ML-Master** | MCTS-based multi-agent tree search for research exploration | Functional |
 | **AI-Scientist-v2** | Multi-worker evolutionary algorithm with code generation | Functional |
@@ -182,9 +182,9 @@ ResearchGym includes multiple agent implementations. See [agents/README.md](agen
 | **ClaudeCode** | Claude Agent SDK wrapper | Experimental |
 | **Codex** | OpenAI Codex CLI wrapper | Experimental |
 
-### BasicAgent Tools
+### RGAgent Tools
 
-BasicAgent provides a comprehensive toolkit for autonomous research:
+RGAgent provides a comprehensive toolkit for autonomous research:
 
 | Category | Tools |
 |----------|-------|
@@ -194,7 +194,7 @@ BasicAgent provides a comprehensive toolkit for autonomous research:
 | **Web** (optional) | `web_search()`, `web_browser()` |
 | **Control** | `end_task()` |
 
-See [BasicAgent README](agents/BasicAgent/README.md) for full documentation.
+See [RGAgent README](agents/RGAgent/README.md) for full documentation.
 
 ### Running Different Agents
 
@@ -300,7 +300,7 @@ runs/2025-01-15/abc123/
 
 3. Add dispatch logic in `main()` (~line 1364+).
 
-See `agents/basic_agent_adapter.py` for a complete reference implementation.
+See `agents/rg_agent_adapter.py` for a complete reference implementation.
 
 ---
 

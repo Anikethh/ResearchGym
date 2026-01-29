@@ -6,7 +6,7 @@ This directory contains all agent implementations for ResearchGym. Each agent fo
 
 | Agent | Directory | Status | Description |
 |-------|-----------|--------|-------------|
-| **BasicAgent** | `BasicAgent/` | Production | Reference implementation using [inspect_ai](https://ukgovernmentbeis.github.io/inspect_ai/) with comprehensive file/code tools |
+| **RGAgent** | `RGAgent/` | Production | Reference implementation using [inspect_ai](https://ukgovernmentbeis.github.io/inspect_ai/) with comprehensive file/code tools |
 | **InspectionAgent** | `InspectionAgent/` | Production | Post-run verification agent that detects cheating or rule violations |
 | **ML-Master** | `ML-Master/` | Functional | MCTS-based multi-agent tree search for research exploration |
 | **AI-Scientist-v2** | `AI-Scientist-v2/` | Functional | Multi-worker evolutionary algorithm with code generation |
@@ -40,7 +40,7 @@ class AgentAdapter:
 
 ## Quick Comparison
 
-| Feature | BasicAgent | ML-Master | AI-Scientist | OpenEvolve |
+| Feature | RGAgent | ML-Master | AI-Scientist | OpenEvolve |
 |---------|------------|-----------|--------------|------------|
 | **Framework** | inspect_ai | Custom MCTS | Multi-worker | Evolutionary |
 | **File Tools** | Yes | Yes | Yes | Limited |
@@ -51,13 +51,13 @@ class AgentAdapter:
 
 ## Detailed Documentation
 
-- **[BasicAgent](BasicAgent/README.md)** - Full tool reference, configuration, and usage
+- **[RGAgent](RGAgent/README.md)** - Full tool reference, configuration, and usage
 - **[InspectionAgent](InspectionAgent/README.md)** - Post-run verification and cheating detection
 
 ## Adding New Agents
 
 1. Create a directory under `agents/` with your agent name
-2. Implement the adapter following `basic_agent_adapter.py` as template
+2. Implement the adapter following `rg_agent_adapter.py` as template
 3. Add CLI arguments in `run_agent.py` (~line 294-340)
 4. Add dispatch logic in `main()` (~line 1364+)
 

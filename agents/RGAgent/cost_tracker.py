@@ -1,5 +1,5 @@
 """
-Cost tracking module for BasicAgent with support for cached tokens.
+Cost tracking module for RGAgent with support for cached tokens.
 Tracks and calculates costs for GPT-5 and Gemini models.
 """
 
@@ -58,6 +58,17 @@ class CostTracker:
                 "input": 0.10,   # $0.10 per 1M tokens
                 "output": 0.40,  # $0.40 per 1M tokens
                 "cached_input": 0.025,  # $0.025 per 1M tokens
+            },
+
+            # Gemini 3.0 Pro (preview) pricing (tiered)
+            "google/gemini-3-pro-preview": {
+                "input_low": 2.00,     # $2.00 per 1M tokens (≤200k)
+                "input_high": 4.00,    # $4.00 per 1M tokens (>200k)
+                "output_low": 12.00,   # $12.00 per 1M tokens (≤200k)
+                "output_high": 18.00,  # $18.00 per 1M tokens (>200k)
+                "cached_low": 0.20,    # $0.20 per 1M tokens (≤200k)
+                "cached_high": 0.40,   # $0.40 per 1M tokens (>200k)
+                "threshold": 200000,   # 200k token threshold
             },
         }
 
@@ -128,15 +139,23 @@ class CostTracker:
         reasoning_tokens: int = 0,
     ) -> float:
         """Calculate cost for given usage."""
-        if model not in self.MODEL_PRICES:
+        normalized_model = model
+        billed_output_tokens = output_tokens + reasoning_tokens
+        if "gemini-2.5-pro" in model:
+            normalized_model = "google/gemini-2.5-pro"
+        elif "gemini-2.5-flash-lite" in model:
+            normalized_model = "google/gemini-2.5-flash-lite"
+        elif "gemini-3" in model and "pro" in model:
+            normalized_model = "google/gemini-3-pro-preview"
+
+        if normalized_model not in self.MODEL_PRICES:
             logger.warning(f"No pricing information for model: {model}")
             return 0.0
             
-        prices = self.MODEL_PRICES[model]
+        prices = self.MODEL_PRICES[normalized_model]
         cost = 0.0
         
-        # Handle tiered pricing for Gemini 2.5 Pro
-        if model == "google/gemini-2.5-pro":
+        # Handle tiered pricing for Gemini 2.5 Pro and Gemini 3 Pro Preview
             threshold = prices["threshold"]
             
             # Input tokens cost (tiered)
@@ -227,13 +246,21 @@ class CostTracker:
 
     def _get_cost_breakdown(self, model: str, tokens: Dict) -> Dict:
         """Get detailed cost breakdown for a model."""
-        if model not in self.MODEL_PRICES:
+        normalized_model = model
+        if "gemini-2.5-pro" in model:
+            normalized_model = "google/gemini-2.5-pro"
+        elif "gemini-2.5-flash-lite" in model:
+            normalized_model = "google/gemini-2.5-flash-lite"
+        elif "gemini-3" in model and "pro" in model:
+            normalized_model = "google/gemini-3-pro-preview"
+
+        if normalized_model not in self.MODEL_PRICES:
             return {}
             
-        prices = self.MODEL_PRICES[model]
+        prices = self.MODEL_PRICES[normalized_model]
         breakdown = {}
         
-        if model == "google/gemini-2.5-pro":
+        if normalized_model in ("google/gemini-2.5-pro", "google/gemini-3-pro-preview"):
             threshold = prices["threshold"]
             input_tokens = tokens["input_tokens"]
             output_tokens = tokens["output_tokens"]

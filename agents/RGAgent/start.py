@@ -269,7 +269,7 @@ def run():
     log_dir = os.environ.get("RG_LOG_DIR", "./logs")
     budget_limit = float(os.environ.get("RG_BUDGET_LIMIT", "0"))
 
-    print("BasicAgent starting...")
+    print("RGAgent starting...")
     print(f"Log directory: {log_dir}")
 
     # Print Langfuse status

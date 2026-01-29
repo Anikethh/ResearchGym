@@ -1,10 +1,10 @@
-# BasicAgent
+# RGAgent
 
 The reference agent implementation for ResearchGym, built on the [inspect_ai](https://ukgovernmentbeis.github.io/inspect_ai/) framework from UK AI Safety Institute.
 
 ## Overview
 
-BasicAgent is designed for autonomous AI research tasks. It provides:
+RGAgent is designed for autonomous AI research tasks. It provides:
 - Comprehensive file and code manipulation tools
 - Background job execution for long-running experiments
 - Optional web search capabilities
@@ -171,7 +171,7 @@ end_task("Final accuracy: 92.5% on test set. See results/final_metrics.json")
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `CODE_DIR` | `.` | Agent workspace root |
-| `AGENT_DIR` | `.` | BasicAgent installation directory |
+| `AGENT_DIR` | `.` | RGAgent installation directory |
 | `MAX_TIME_IN_HOURS` | `0.25` | Maximum runtime |
 | `MODEL` | `gpt-4o-mini` | LLM model identifier |
 | `ITERATIVE_AGENT` | `false` | Use simple iterative mode |
@@ -222,7 +222,7 @@ Advanced multi-turn agent with research-focused enhancements.
 
 ## Cost Tracking
 
-BasicAgent includes built-in cost tracking with per-model pricing:
+RGAgent includes built-in cost tracking with per-model pricing:
 
 | Model | Input ($/1M) | Output ($/1M) | Cached ($/1M) |
 |-------|--------------|---------------|---------------|
@@ -248,7 +248,7 @@ Cost logs are written to `RG_LOG_DIR/cost_summary.json`.
 ## File Structure
 
 ```
-BasicAgent/
+RGAgent/
 ├── start.py                    # Entry point
 ├── _basic_agent_iterative.py   # Simple solver
 ├── _basic_agent_plus.py        # Advanced solver
@@ -269,7 +269,7 @@ BasicAgent/
 
 ### Quick Test Run
 ```bash
-python run_agent.py tasks/test/continual-learning basic-agent \
+python run_agent.py tasks/test/continual-learning rg-agent \
     --runtime uv \
     --model google/gemini-2.5-flash-lite \
     --basic_hours 0.1
@@ -277,9 +277,9 @@ python run_agent.py tasks/test/continual-learning basic-agent \
 
 ### Production Run
 ```bash
-python run_agent.py tasks/test/continual-learning basic-agent \
+python run_agent.py tasks/test/continual-learning rg-agent \
     --runtime docker \
-    --image researchgym-basic-agent:latest \
+    --image researchgym-rg-agent:latest \
     --model openai/gpt-4o \
     --basic_hours 12
 ```
@@ -287,7 +287,7 @@ python run_agent.py tasks/test/continual-learning basic-agent \
 ### With Web Search
 ```bash
 export EXA_API_KEY=your_key_here
-python run_agent.py tasks/test/materials-tokenization basic-agent \
+python run_agent.py tasks/test/materials-tokenization rg-agent \
     --runtime uv \
     --model anthropic/claude-sonnet-4-20250514 \
     --basic_hours 6
@@ -299,7 +299,7 @@ python run_agent.py tasks/test/materials-tokenization basic-agent \
 Check environment variables for tool enablement. Some tools are disabled by default for certain providers.
 
 ### Context length exceeded
-BasicAgent Plus mode handles this with automatic pruning and handoff. Consider using iterative mode for simpler tasks.
+RGAgent Plus mode handles this with automatic pruning and handoff. Consider using iterative mode for simpler tasks.
 
 ### Async jobs not working
 Verify `RG_ENABLE_ASYNC=true` and check `async_jobs/` directory permissions.

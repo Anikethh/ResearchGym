@@ -32,8 +32,8 @@ from ResearchGym.agents.ml_master_adapter import MLMasterAdapter, MLMasterConfig
 from ResearchGym.agents.ai_scientist_adapter import AIScientistAdapter, AIScientistConfig
 from ResearchGym.environment.runtime.docker_runner import plan_docker_command
 from ResearchGym.environment.runtime.uv_runner import detect_task_overlay, plan_uv_commands
-from ResearchGym.agents.basic_agent_adapter import BasicAgentAdapter, BasicAgentConfig
-from ResearchGym.agents.basic_agent_evolution_adapter import BasicAgentEvolutionAdapter, BasicAgentEvolutionConfig
+from ResearchGym.agents.rg_agent_adapter import RGAgentAdapter, RGAgentConfig
+from ResearchGym.agents.rg_agent_evolution_adapter import RGAgentEvolutionAdapter, RGAgentEvolutionConfig
 from ResearchGym.agents.ClaudeCode.adapter import ClaudeCodeAdapter
 from ResearchGym.agents.ClaudeCode.config import ClaudeCodeConfig
 from ResearchGym.agents.Codex.adapter import CodexAdapter
@@ -194,7 +194,7 @@ def _collect_resume_usage(run_dir: Path) -> ResumeUsage:
 def _collect_claude_code_resume_usage(run_dir: Path, original_hours: float | None = None) -> ResumeUsage:
     """Collect resume usage from ClaudeCode's cost_summary.json.
 
-    Unlike BasicAgent which uses inspect logs, ClaudeCode stores usage
+    Unlike RGAgent which uses inspect logs, ClaudeCode stores usage
     in cost_summary.json created by its CostTracker.
 
     Args:
@@ -435,7 +435,7 @@ def _replicate_run_state(src: Path, dst: Path, symlink_workspace: bool = False) 
             shutil.copy2(item, target)
 
 
-def _write_usage_summary(run_dir: Path, agent_type: str = "basic-agent") -> None:
+def _write_usage_summary(run_dir: Path, agent_type: str = "rg-agent") -> None:
     """Write usage summary, trying agent-specific format first."""
     try:
         if agent_type == "claude-code":
@@ -444,7 +444,7 @@ def _write_usage_summary(run_dir: Path, agent_type: str = "basic-agent") -> None
         elif agent_type == "codex":
             usage = _collect_codex_resume_usage(run_dir)
         else:
-            # Try inspect log format (basic-agent)
+            # Try inspect log format (rg-agent)
             usage = _collect_resume_usage(run_dir)
     except Exception as exc:
         print(f"Warning: unable to write usage summary for {run_dir}: {exc}")
@@ -513,7 +513,7 @@ def main() -> None:
     parser.add_argument("task_dir", type=Path, help="Path to task directory (e.g., tasks/continual-learning)")
     parser.add_argument(
         "agent",
-        choices=["ml-master", "ai-scientist", "basic-agent", "basic-agent-evolution", "openevolve", "claude-code", "codex"],
+        choices=["ml-master", "ai-scientist", "rg-agent", "rg-agent-evolution", "openevolve", "claude-code", "codex"],
         help="Agent to run",
     )
     parser.add_argument("--runs_dir", type=Path, default=PKG_ROOT / "runs", dest="runs_dir")
@@ -562,14 +562,14 @@ def main() -> None:
     parser.add_argument("--litellm_base_url", type=str, default="", help="LiteLLM base URL for proxying API calls")
     parser.add_argument("--litellm_prelude", type=str, default="", help="LiteLLM prelude commands")
 
-    # BasicAgent args
+    # RGAgent args
     parser.add_argument("--basic_agent_root", type=Path, default=None)
     parser.add_argument("--basic_agent_evolution_root", type=Path, default=None)
     # OpenEvolve args (initially minimal)
     parser.add_argument("--openevolve_root", type=Path, default=None)
     parser.add_argument("--openevolve_iterations", type=int, default=100)
-    parser.add_argument("--basic_hours", type=float, default=0.25, help="Max wall-clock hours for BasicAgent")
-    parser.add_argument("--basic_iterative", action="store_true", help="Use iterative BasicAgent loop")
+    parser.add_argument("--basic_hours", type=float, default=0.25, help="Max wall-clock hours for RGAgent")
+    parser.add_argument("--basic_iterative", action="store_true", help="Use iterative RGAgent loop")
     parser.add_argument("--basic_disallow_submit", action="store_true", help="Hide end_task tool")
     parser.add_argument("--basic_code_only", action="store_true", help="Code-only system message variant")
     parser.add_argument("--budget_limit", type=float, default=10.0, help="Maximum budget in USD for LLM API calls (0 for no limit)")
@@ -664,7 +664,7 @@ def main() -> None:
             except Exception:
                 parent_meta = {}
 
-        if args.agent == "basic-agent":
+        if args.agent == "rg-agent":
             transcript_path = resume_dir / "transcript.json"
             if not transcript_path.exists():
                 print(f"Transcript file not found at {transcript_path}. Cannot resume without conversation history.")
@@ -1205,7 +1205,7 @@ def main() -> None:
         inner_cmd = adapter.build_command(cfg=cfg, ai_root=ai_root)
         inner_env = getattr(adapter, "_last_env_hint", {})
 
-        # Always enable transcript persistence for Basic-Agent runs so future
+        # Always enable transcript persistence for RG-Agent runs so future
         # resumes have a transcript to seed from.
         try:
             transcript_path = env.run_dir / "transcript.json"
@@ -1284,7 +1284,7 @@ def main() -> None:
                 if not shell_cmd:
                     print("UV plan missing 'shell'")
                     sys.exit(2)
-                # Enforce wall-clock time limit similar to BasicAgent
+                # Enforce wall-clock time limit similar to RGAgent
                 max_secs = int(args.ai_hours * 3600)
                 start_time = time.time()
                 with open(stdout_log, "w", encoding='utf-8') as out, open(stderr_log, "w", encoding='utf-8') as err:
@@ -1324,20 +1324,20 @@ def main() -> None:
                 print(f"Warning: could not integrate AI-Scientist costs: {e}")
 
 
-    elif args.agent == "basic-agent":
-        adapter = BasicAgentAdapter(env=env, run_group=run_group, run_id=run_id)
+    elif args.agent == "rg-agent":
+        adapter = RGAgentAdapter(env=env, run_group=run_group, run_id=run_id)
         agent_root = args.basic_agent_root
         if agent_root is None:
             candidates = [
-                PKG_ROOT / "agents" / "BasicAgent",
+                PKG_ROOT / "agents" / "RGAgent",
             ]
             agent_root = next((c for c in candidates if (c / "start.py").exists()), None)
             if agent_root is None:
-                print("Could not auto-detect BasicAgent. Set --basic_agent_root to the directory.")
+                print("Could not auto-detect RGAgent. Set --basic_agent_root to the directory.")
                 for c in candidates:
                     print(f" - {c}")
                 sys.exit(2)
-        print(f"Using BasicAgent root: {agent_root}")
+        print(f"Using RGAgent root: {agent_root}")
         if not (is_resuming and resumed_into_new_dir):
             adapter.prepare_workspace(task_dir=args.task_dir)
         else:
@@ -1346,7 +1346,7 @@ def main() -> None:
         task_id = args.task_dir.resolve().name
 
         # Build config
-        ba_cfg = BasicAgentConfig(
+        ba_cfg = RGAgentConfig(
             task_id=task_id,
             model=args.model or default_code_model,
             time_hours=args.basic_hours,
@@ -1415,7 +1415,7 @@ def main() -> None:
         overlay = detect_task_overlay(args.task_dir)
         if args.runtime == "docker":
             docker_install_steps = []
-            # Ensure BasicAgent dependencies are available inside the container when requirements exist
+            # Ensure RGAgent dependencies are available inside the container when requirements exist
             docker_install_steps.append("pip install -r /agent/requirements.txt")
             if overlay.get("install_sh"):
                 docker_install_steps.append("chmod +x /task/install.sh || true && bash /task/install.sh")
@@ -1429,7 +1429,7 @@ def main() -> None:
                 prelude_parts.append(args.litellm_prelude)
             if docker_install_steps:
                 prelude_parts = docker_install_steps + prelude_parts
-            # Inject BasicAgent env exports so tools know workspace locations inside container
+            # Inject RGAgent env exports so tools know workspace locations inside container
             docker_env_exports = None
             if inner_env:
                 inner_env["DISABLE_BROWSER"] = "true"
@@ -1484,7 +1484,7 @@ def main() -> None:
         else:
             runtime_plan = plan_uv_commands(
                 cache_dir=env.run_dir / ".uv_cache",
-                venv_name=f"{task_id}-{run_id}-basic-agent",
+                venv_name=f"{task_id}-{run_id}-rg-agent",
                 task_overlay=overlay,
                 project_root=agent_root,
                 command=inner_cmd,
@@ -1549,7 +1549,7 @@ def main() -> None:
                                         "copy /Y \"%VIRTUAL_ENV%\\Scripts\\apply_patch\" \"%VIRTUAL_ENV%\\Scripts\\applypatch\" >nul",
                                     ]
                                     # Insert wrapper right before the agent start line if we can find it
-                                    exec_line = next((i for i, l in enumerate(lines) if l.strip().endswith("BasicAgent\\start.py")), None)
+                                    exec_line = next((i for i, l in enumerate(lines) if l.strip().endswith("RGAgent\\start.py")), None)
                                     if exec_line is not None:
                                         lines = lines[:exec_line] + wrapper + lines[exec_line:]
                                 except Exception:
@@ -1562,7 +1562,7 @@ def main() -> None:
                 # Append after PATH export so $VIRTUAL_ENV is set (Unix)
                 wrapper = "echo '#!/bin/bash' > \"$VIRTUAL_ENV\"/bin/apply_patch && echo 'python " + json.dumps(str(agent_root / "apply_patch.py")) + " \"$@\"' >> \"$VIRTUAL_ENV\"/bin/apply_patch && chmod +x \"$VIRTUAL_ENV\"/bin/apply_patch && (ln -sf \"$VIRTUAL_ENV\"/bin/apply_patch \"$VIRTUAL_ENV\"/bin/applypatch || cp \"$VIRTUAL_ENV\"/bin/apply_patch \"$VIRTUAL_ENV\"/bin/applypatch)"
                 runtime_plan["shell"][2] = runtime_plan["shell"][2].replace('export PATH="$VIRTUAL_ENV/bin:$PATH"', 'export PATH="$VIRTUAL_ENV/bin:$PATH" && ' + wrapper)
-            # Always disable interactive browser tools for BasicAgent in UV runs
+            # Always disable interactive browser tools for RGAgent in UV runs
             try:
                 inner_env["DISABLE_BROWSER"] = "true"
             except Exception:
@@ -1607,25 +1607,25 @@ def main() -> None:
             (env.run_dir / "status.json").write_text(json.dumps({"status": "completed", "returncode": rc}, indent=2))
             _write_usage_summary(env.run_dir)
 
-    elif args.agent == "basic-agent-evolution":
-        adapter = BasicAgentEvolutionAdapter(env=env, run_group=run_group, run_id=run_id)
+    elif args.agent == "rg-agent-evolution":
+        adapter = RGAgentEvolutionAdapter(env=env, run_group=run_group, run_id=run_id)
         agent_root = args.basic_agent_evolution_root
         if agent_root is None:
             candidates = [
-                PKG_ROOT / "agents" / "BasicAgentEvolution",
+                PKG_ROOT / "agents" / "RGAgentEvolution",
             ]
             agent_root = next((c for c in candidates if (c / "start.py").exists()), None)
             if agent_root is None:
-                print("Could not auto-detect BasicAgentEvolution. Set --basic_agent_evolution_root to the directory.")
+                print("Could not auto-detect RGAgentEvolution. Set --basic_agent_evolution_root to the directory.")
                 for c in candidates:
                     print(f" - {c}")
                 sys.exit(2)
-        print(f"Using BasicAgentEvolution root: {agent_root}")
+        print(f"Using RGAgentEvolution root: {agent_root}")
         adapter.prepare_workspace(task_dir=args.task_dir)
         _apply_idea_hint_or_exit(env.workspace_dir / "input", idea_hint_text)
         task_id = args.task_dir.resolve().name
 
-        bae_cfg = BasicAgentEvolutionConfig(
+        bae_cfg = RGAgentEvolutionConfig(
             task_id=task_id,
             model=args.model or default_code_model,
             time_hours=args.basic_hours,
@@ -1733,7 +1733,7 @@ def main() -> None:
         else:
             runtime_plan = plan_uv_commands(
                 cache_dir=env.run_dir / ".uv_cache",
-                venv_name=f"{task_id}-{run_id}-basic-agent-evolution",
+                venv_name=f"{task_id}-{run_id}-rg-agent-evolution",
                 task_overlay=overlay,
                 project_root=agent_root,
                 command=inner_cmd,
@@ -1786,7 +1786,7 @@ def main() -> None:
                                     "copy /Y \"%VIRTUAL_ENV%\\Scripts\\apply_patch\" \"%VIRTUAL_ENV%\\Scripts\\applypatch\" >nul",
                                 ]
                                 exec_line = next(
-                                    (i for i, l in enumerate(lines) if l.strip().endswith("BasicAgentEvolution\\start.py")), None
+                                    (i for i, l in enumerate(lines) if l.strip().endswith("RGAgentEvolution\\start.py")), None
                                 )
                                 if exec_line is not None:
                                     lines = lines[:exec_line] + wrapper + lines[exec_line:]

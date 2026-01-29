@@ -1,5 +1,5 @@
 """
-Cost logging utilities for BasicAgent.
+Cost logging utilities for RGAgent.
 Provides functions to extract costs from existing logs and add cost information.
 """
 
@@ -55,7 +55,7 @@ def calculate_cost_from_usage(model: str, usage_data: Dict[str, Any]) -> Dict[st
 
 def add_cost_to_log_file(log_file_path: Path) -> None:
     """
-    Add cost information to an existing BasicAgent log file.
+    Add cost information to an existing RGAgent log file.
     
     Args:
         log_file_path: Path to the log file
@@ -152,7 +152,7 @@ def print_cost_summary(logs_dir: Path) -> None:
         return
     
     print(f"\n{'='*60}")
-    print(f"BASICAGENT COST SUMMARY")
+    print(f"RGAGENT COST SUMMARY")
     print(f"{'='*60}")
     
     total_cost = 0.0

@@ -6,15 +6,15 @@ import sys
 from pathlib import Path
 from string import Template
 
-# Ensure vendored inspect_ai is importable (same as BasicAgent)
+# Ensure vendored inspect_ai is importable (same as RGAgent)
 THIS_DIR = Path(__file__).resolve().parent
-BASICAGENT_DIR = THIS_DIR.parent / "BasicAgent"
-INSPECT_SRC = BASICAGENT_DIR / "inspect_ai" / "src"
+RGAGENT_DIR = THIS_DIR.parent / "RGAgent"
+INSPECT_SRC = RGAGENT_DIR / "inspect_ai" / "src"
 if INSPECT_SRC.exists():
     sys.path.insert(0, str(INSPECT_SRC))
 
-# Add BasicAgent to path for importing tools
-sys.path.insert(0, str(BASICAGENT_DIR))
+# Add RGAgent to path for importing tools
+sys.path.insert(0, str(RGAGENT_DIR))
 
 from _execute import bash
 from _file_reader import read_file_chunk

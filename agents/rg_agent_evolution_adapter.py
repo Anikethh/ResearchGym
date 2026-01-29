@@ -13,7 +13,7 @@ from ResearchGym.utils.logging import setup_file_logger
 
 
 @dataclass
-class BasicAgentConfig:
+class RGAgentEvolutionConfig:
     task_id: str
     model: str
     time_hours: float
@@ -25,17 +25,17 @@ class BasicAgentConfig:
     idea_hint: bool = False
 
 
-class BasicAgentAdapter:
+class RGAgentEvolutionAdapter:
     def __init__(self, env: AgenticEnv, run_group: str, run_id: str) -> None:
         self.env = env
         self.run_group = run_group
         self.run_id = run_id
         self.run_logger = setup_file_logger(
-            name=f"basic-agent:{run_id}",
+            name=f"rg-agent-evolution:{run_id}",
             log_file=self.env.run_dir / "agent.log",
         )
         self.logger = setup_file_logger(
-            name=f"basic-agent-adapter:{run_id}",
+            name=f"rg-agent-evolution-adapter:{run_id}",
             log_file=self.env.logs_dir / "adapter.log",
         )
 
@@ -49,16 +49,16 @@ class BasicAgentAdapter:
             ignore=shutil.ignore_patterns(".git", "__pycache__", "requirements.txt", "install.sh", "idea_hint.txt"),
         )
 
-    def build_command(self, agent_root: Path, cfg: BasicAgentConfig) -> list[str]:
-        # Run the vendored BasicAgent start.py as a module with env vars
+    def build_command(self, agent_root: Path, cfg: RGAgentEvolutionConfig) -> list[str]:
+        # Run the vendored RGAgentEvolution start.py as a module with env vars
         python = sys.executable
         entry = agent_root / "start.py"
         cmd = [python, str(entry)]
         return cmd
 
-    def run(self, cfg: BasicAgentConfig, agent_root: Path, dry_run: bool = True) -> Observation:
+    def run(self, cfg: RGAgentEvolutionConfig, agent_root: Path, dry_run: bool = True) -> Observation:
         cmd = self.build_command(agent_root, cfg)
-        self.logger.info(f"BasicAgent command: {' '.join(cmd)}")
+        self.logger.info(f"RGAgentEvolution command: {' '.join(cmd)}")
         self.run_logger.info(f"planning: {' '.join(cmd)}")
         env = os.environ.copy()
         input_dir = self.env.workspace_dir / "input"
@@ -69,12 +69,12 @@ class BasicAgentAdapter:
             instructions_file = instructions_txt
         elif task_desc_md.exists():
             instructions_file = task_desc_md
-        # Provide environment used by BasicAgent
+        # Provide environment used by RGAgentEvolution
         env.update(
             {
                 "WORKSPACE_BASE": str(self.env.workspace_dir),
                 "CODE_DIR": str(self.env.workspace_dir / "input"),
-                # Keep async job outputs inside the agent-visible CODE_DIR
+                # Keep async job outputs inside CODE_DIR so the agent doesn't need to access parents
                 "RG_ASYNC_JOBS_DIR": str(self.env.workspace_dir / "input" / "async_jobs"),
                 "AGENT_DIR": str(agent_root),
                 "RG_RUN_DIR": str(self.env.run_dir),
@@ -83,18 +83,19 @@ class BasicAgentAdapter:
                 "ITERATIVE_AGENT": "true" if cfg.iterative else "false",
                 "DISALLOW_SUBMIT": "true" if cfg.disallow_submit else "false",
                 "PB_CODE_ONLY": "true" if cfg.code_only else "false",
-                # Pass the correct log directory to BasicAgent
+                # Pass the correct log directory to RGAgentEvolution
                 "RG_LOG_DIR": str(self.env.logs_dir),
                 # Pass budget limit for real-time monitoring
                 "RG_BUDGET_LIMIT": str(cfg.budget_limit),
                 # Stream per-iteration metadata so interrupted runs can recover usage stats
                 "RG_METADATA_STREAM_PATH": str(self.env.logs_dir / "metadata_stream.jsonl"),
+                # Persist transcript for resume
+                "RG_TRANSCRIPT_PATH": str(self.env.run_dir / "transcript.json"),
                 "RG_IDEA_HINT": "true" if cfg.idea_hint else "false",
             }
         )
         if instructions_file:
             env["RG_INSTRUCTIONS_FILE"] = str(instructions_file)
-
         # Map GEMINI_API_KEY -> GOOGLE_API_KEY if needed for inspect_ai's google provider
         if "GOOGLE_API_KEY" not in env and env.get("GEMINI_API_KEY"):
             env["GOOGLE_API_KEY"] = env["GEMINI_API_KEY"]
@@ -134,13 +135,12 @@ class BasicAgentAdapter:
                             "DISALLOW_SUBMIT",
                             "PB_CODE_ONLY",
                             "RG_INSTRUCTIONS_FILE",
-                    "RG_LOG_DIR",
-                    "RG_RUN_DIR",
-                    "RG_BUDGET_LIMIT",
-                    "RG_IDEA_HINT",
-                    # Web search feature flags (no secrets)
-                    "USE_EXA_SEARCH",
-                    "USE_GOOGLE_WEB_SEARCH",
+                            "RG_LOG_DIR",
+                            "RG_BUDGET_LIMIT",
+                            "RG_IDEA_HINT",
+                            # Web search feature flags (no secrets)
+                            "USE_EXA_SEARCH",
+                            "USE_GOOGLE_WEB_SEARCH",
                         ]
                         if k in env
                     },
@@ -151,8 +151,8 @@ class BasicAgentAdapter:
             cmd,
             cwd=str(agent_root),
             env=env,
-            stdout=open(self.env.logs_dir / "basic_agent.stdout.log", "w"),
-            stderr=open(self.env.logs_dir / "basic_agent.stderr.log", "w"),
+            stdout=open(self.env.logs_dir / "rg_agent_evolution.stdout.log", "w"),
+            stderr=open(self.env.logs_dir / "rg_agent_evolution.stderr.log", "w"),
         )
         rc = proc.wait(timeout=cfg.time_limit_secs)
         return Observation(message="completed", info={"returncode": rc})

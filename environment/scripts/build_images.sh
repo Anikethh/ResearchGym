@@ -128,7 +128,7 @@ if [[ $BUILD_AGENTS == true ]]; then
     # Update base image reference in agent Dockerfiles if using custom tag
     if [[ -n "$TAG_PREFIX" ]]; then
         echo -e "${YELLOW}Updating Dockerfile references for tag prefix...${NC}"
-        for dockerfile in "$CONTAINERS_DIR"/Dockerfile.*-agent "$CONTAINERS_DIR"/Dockerfile.ai-scientist "$CONTAINERS_DIR"/Dockerfile.ml-master "$CONTAINERS_DIR"/Dockerfile.basic-agent-rl; do
+        for dockerfile in "$CONTAINERS_DIR"/Dockerfile.*-agent "$CONTAINERS_DIR"/Dockerfile.ai-scientist "$CONTAINERS_DIR"/Dockerfile.ml-master "$CONTAINERS_DIR"/Dockerfile.rg-agent-rl; do
             if [[ -f "$dockerfile" ]]; then
                 sed -i.bak "s/FROM researchgym-base:latest/FROM ${TAG_PREFIX}researchgym-base:latest/" "$dockerfile"
             fi
@@ -137,8 +137,8 @@ if [[ $BUILD_AGENTS == true ]]; then
     
     # Agent images to build
     AGENTS=(
-        "basic-agent:environment/containers/Dockerfile.basic-agent"
-        "basic-agent-rl:environment/containers/Dockerfile.basic-agent-rl"
+        "rg-agent:environment/containers/Dockerfile.rg-agent"
+        "rg-agent-rl:environment/containers/Dockerfile.rg-agent-rl"
         "ai-scientist:environment/containers/Dockerfile.ai-scientist" 
         "ml-master:environment/containers/Dockerfile.ml-master"
     )
@@ -170,7 +170,7 @@ if [[ $BUILD_AGENTS == true ]]; then
             echo -e "${RED}✗ Failed to build $agent_name image${NC}" >&2
             # Restore original Dockerfiles if they were modified
             if [[ -n "$TAG_PREFIX" ]]; then
-                for dockerfile in "$CONTAINERS_DIR"/Dockerfile.*-agent "$CONTAINERS_DIR"/Dockerfile.ai-scientist "$CONTAINERS_DIR"/Dockerfile.ml-master "$CONTAINERS_DIR"/Dockerfile.basic-agent-rl; do
+                for dockerfile in "$CONTAINERS_DIR"/Dockerfile.*-agent "$CONTAINERS_DIR"/Dockerfile.ai-scientist "$CONTAINERS_DIR"/Dockerfile.ml-master "$CONTAINERS_DIR"/Dockerfile.rg-agent-rl; do
                     if [[ -f "$dockerfile.bak" ]]; then
                         mv "$dockerfile.bak" "$dockerfile"
                     fi
@@ -184,7 +184,7 @@ if [[ $BUILD_AGENTS == true ]]; then
     # Restore original Dockerfiles if they were modified
     if [[ -n "$TAG_PREFIX" ]]; then
         echo -e "${YELLOW}Restoring original Dockerfiles...${NC}"
-        for dockerfile in "$CONTAINERS_DIR"/Dockerfile.*-agent "$CONTAINERS_DIR"/Dockerfile.ai-scientist "$CONTAINERS_DIR"/Dockerfile.ml-master "$CONTAINERS_DIR"/Dockerfile.basic-agent-rl; do
+        for dockerfile in "$CONTAINERS_DIR"/Dockerfile.*-agent "$CONTAINERS_DIR"/Dockerfile.ai-scientist "$CONTAINERS_DIR"/Dockerfile.ml-master "$CONTAINERS_DIR"/Dockerfile.rg-agent-rl; do
             if [[ -f "$dockerfile.bak" ]]; then
                 mv "$dockerfile.bak" "$dockerfile"
             fi
@@ -200,8 +200,8 @@ if [[ $BUILD_BASE == true ]]; then
     echo "  - ${TAG_PREFIX}researchgym-base:latest"
 fi
 if [[ $BUILD_AGENTS == true ]]; then
-    echo "  - ${TAG_PREFIX}researchgym-basic-agent:latest"
-    echo "  - ${TAG_PREFIX}researchgym-basic-agent-rl:latest"
+    echo "  - ${TAG_PREFIX}researchgym-rg-agent:latest"
+    echo "  - ${TAG_PREFIX}researchgym-rg-agent-rl:latest"
     echo "  - ${TAG_PREFIX}researchgym-ai-scientist:latest"
     echo "  - ${TAG_PREFIX}researchgym-ml-master:latest"
 fi

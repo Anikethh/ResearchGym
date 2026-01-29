@@ -205,7 +205,7 @@ def run():
     log_dir = os.environ.get("RG_LOG_DIR", "./logs")
     budget_limit = float(os.environ.get("RG_BUDGET_LIMIT", "0"))
 
-    print("BasicAgentEvolution starting...")
+    print("RGAgentEvolution starting...")
     print(f"Log directory: {log_dir}")
     if budget_limit > 0:
         print(f"Budget limit: ${budget_limit:.2f}")

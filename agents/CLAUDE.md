@@ -7,7 +7,7 @@
 
 - `ClaudeCode/` - Claude Agent SDK wrapper (claude-agent-sdk)
 - `Codex/` - OpenAI Codex CLI wrapper (@openai/codex)
-- `BasicAgent/` - Reference implementation in main ResearchGym
+- `RGAgent/` - Reference implementation in main ResearchGym
 
 # Key Files
 

@@ -48,7 +48,7 @@ finish_inspection(
 ```
 
 ### File Tools
-InspectionAgent also has access to BasicAgent's file tools:
+InspectionAgent also has access to RGAgent's file tools:
 - `bash()` - Run commands (e.g., `diff`, `grep`)
 - `read_file_chunk()` - Read files
 - `search_file()` - Search within files
@@ -110,7 +110,7 @@ Each run directory must have:
 - `workspace/input/` - The agent's modified codebase (required)
 
 Optional but recommended:
-- `transcript.json` - Structured conversation history (BasicAgent runs)
+- `transcript.json` - Structured conversation history (RGAgent runs)
 - `logs/exec.stdout.log` - Raw execution output (fallback if no transcript)
 
 If `transcript.json` is missing, the `read_transcript()` tool will error. The agent can still use bash to read `exec.stdout.log` instead.
