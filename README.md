@@ -8,16 +8,6 @@ Each task provides a research problem statement, a pruned code repository (evalu
 
 ---
 
-## Leaderboard
-
-
-| Agent | Model | Avg. Normalized Score |
-|-------|-------|------------|
-| RG-Agent | GPT-5 (High) |  0.8607 ± 0.27 |
-| Codex | GPT-5.2-Codex (xHigh) | 0.621 ± 0.38 |
-| Claude Code | Claude Opus 4.5 | 0.240 ± 0.31 |
-
----
 
 ## Overview
 
