@@ -13,7 +13,7 @@ ResearchGym addresses a key gap in AI evaluation: measuring an agent's ability t
 
 ### Key Features
 
-- **Research-Grade Tasks**: 5 test tasks sourced from ACL/ICML/ICLR 2024-2025 oral and spotlight papers, spanning vision, NLP, and RL
+- **Research-Grade Tasks**: 5 test tasks sourced from ACL/ICML/ICLR 2025 oral and spotlight papers, spanning vision, NLP, and RL
 - **Objective Evaluation**: All tasks have quantitative metrics (accuracy, F1, mIoU, etc.) with established baselines to beat
 - **Autonomous Operation**: Agents run for 12-24 hours without human intervention, making real research decisions
 - **Budget Constraints**: $10 default API budget enforces efficient reasoning and experimentation
