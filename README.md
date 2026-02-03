@@ -26,13 +26,13 @@ ResearchGym addresses a key gap in AI evaluation: measuring an agent's ability t
 
 ### Test Set (5 Tasks)
 
-| Task | Domain | Description | Primary Metric | Baseline |
-|------|--------|-------------|----------------|----------|
-| **continual-learning** | Vision | Develop scalable continual learning methods for foundation models without rehearsal | Accuracy, AAA | InfLoRA: 86.75% (CIFAR-100) |
-| **cross-modal-retrieval** | Vision-Language | Address query shift in cross-modal retrieval with online adaptation | Recall@1 | EATA: 54.4% avg |
-| **improving-replay-buffers** | Reinforcement Learning | Design memory systems for efficient experience replay without overfitting | Avg. Return | SynthER: 727 (Quadruped-Walk) |
-| **materials-tokenization** | NLP/Science | Develop tokenization strategies preserving domain-specific material terminology | Micro-F1, Macro-F1 | PickyBPE: 75.6% |
-| **time-series-explanation** | XAI | Create directionally-aware explanations for time series predictions | CPD, AUP, AUR | IG: 0.573 CPD |
+| Task | Domain | Description | Primary Metric |
+|------|--------|-------------|----------------|
+| **continual-learning** | Vision | Develop scalable continual learning methods for foundation models without rehearsal | Accuracy, AAA |
+| **cross-modal-retrieval** | Vision-Language | Address query shift in cross-modal retrieval with online adaptation | Recall@1 |
+| **improving-replay-buffers** | Reinforcement Learning | Design memory systems for efficient experience replay without overfitting | Avg. Return |
+| **materials-tokenization** | NLP/Science | Develop tokenization strategies preserving domain-specific material terminology | Micro-F1, Macro-F1 |
+| **time-series-explanation** | XAI | Create directionally-aware explanations for time series predictions | CPD, AUP, AUR |
 
 ### Task Structure
 
