@@ -9,6 +9,7 @@ logs/
 *.md
 !CLAUDE.md
 !README.md
+!CONTRIBUTING.md
 !behaviour_documentation.md
 !agents/**/README.md
 results/
