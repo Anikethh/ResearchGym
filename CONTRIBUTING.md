@@ -88,7 +88,7 @@ python evaluate.py --output-format json
 
 1. Create task directory following the structure above
 2. Verify baselines run and produce expected scores
-3. Test with BasicAgent for ~1 hour to ensure it's tractable
+3. Test with RGAgent for ~1 hour to ensure it's tractable
 4. Submit PR with:
    - Task files
    - Paper reference (title, authors, venue, year)
@@ -96,7 +96,7 @@ python evaluate.py --output-format json
 
 ## Adding New Agents
 
-1. Create adapter in `agents/` following `basic_agent_adapter.py`
+1. Create adapter in `agents/` following `rg_agent_adapter.py`
 2. Implement required methods:
    ```python
    def prepare_workspace(self, task_dir: Path) -> None
