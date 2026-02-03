@@ -161,14 +161,14 @@ python run_agent.py tasks/test/improving-replay-buffers rg-agent \
 
 ResearchGym includes multiple agent implementations. See [agents/README.md](agents/README.md) for detailed documentation.
 
-| Agent | Description | Status |
-|-------|-------------|--------|
-| **[RGAgent](agents/RGAgent/README.md)** | Reference implementation using [inspect_ai](https://github.com/UKGovernmentBEIS/inspect_ai) with comprehensive tools | Production |
-| **[InspectionAgent](agents/InspectionAgent/README.md)** | Post-run verification agent for detecting cheating/violations | Production |
-| **ML-Master** | MCTS-based multi-agent tree search for research exploration | Functional |
-| **AI-Scientist-v2** | Multi-worker evolutionary algorithm with code generation | Functional |
-| **ClaudeCode** | Claude Agent SDK wrapper | Experimental |
-| **Codex** | OpenAI Codex CLI wrapper | Experimental |
+| Agent | Description |
+|-------|-------------|
+| **[RGAgent](agents/RGAgent/README.md)** | Reference implementation using [inspect_ai](https://github.com/UKGovernmentBEIS/inspect_ai) with comprehensive tools |
+| **[InspectionAgent](agents/InspectionAgent/README.md)** | Post-run verification agent for detecting cheating/violations |
+| **ML-Master** | MCTS-based multi-agent tree search for research exploration | 
+| **AI-Scientist-v2** | Multi-worker evolutionary algorithm with code generation |
+| **ClaudeCode** | Claude Agent SDK wrapper | 
+| **Codex** | OpenAI Codex CLI wrapper |
 
 ### RGAgent Tools
 
