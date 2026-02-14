@@ -115,7 +115,7 @@ python run_agent.py tasks/test/continual-learning rg-agent \
 # Standard run (12 hours, production model)
 python run_agent.py tasks/test/continual-learning rg-agent \
     --runtime uv \
-    --model openai/gpt-4o \
+    --model openai/gpt-5 \
     --basic_hours 12
 
 # Production run with Docker
@@ -149,7 +149,7 @@ python run_agent.py tasks/test/continual-learning rg-agent \
 python run_agent.py tasks/test/improving-replay-buffers rg-agent \
     --runtime docker \
     --image researchgym-rg-agent-rl:latest \
-    --model openai/gpt-4o \
+    --model openai/gpt-5 \
     --basic_hours 12 \
     --gpus
 ```
