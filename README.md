@@ -18,7 +18,6 @@ ResearchGym addresses a key gap in AI evaluation: measuring an agent's ability t
 - **Autonomous Operation**: Agents run for 12-24 hours without human intervention, making real research decisions
 - **Budget Constraints**: $10 default API budget enforces efficient reasoning and experimentation
 - **Multiple Runtimes**: Local execution with `uv` for development, Docker containers for reproducible production runs
-- **Multi-Agent Support**: Includes RGAgent (inspect_ai), ML-Master (MCTS), AI-Scientist-v2 (evolutionary), and OpenEvolve (AlphaEvolve-style)
 
 ---
 
@@ -32,7 +31,7 @@ ResearchGym addresses a key gap in AI evaluation: measuring an agent's ability t
 | **cross-modal-retrieval** | Vision-Language | Address query shift in cross-modal retrieval with online adaptation | Recall@1 |
 | **improving-replay-buffers** | Reinforcement Learning | Design memory systems for efficient experience replay without overfitting | Avg. Return |
 | **materials-tokenization** | NLP/Science | Develop tokenization strategies preserving domain-specific material terminology | Micro-F1, Macro-F1 |
-| **time-series-explanation** | XAI | Create directionally-aware explanations for time series predictions | CPD, AUP, AUR |
+| **time-series-explanation** | Time Series/XAI | Create directionally-aware explanations for time series predictions | CPD, AUP, AUR |
 
 ### Task Structure
 
@@ -87,7 +86,7 @@ tasks/test/<task-name>/
    SEMANTIC_SCHOLAR_API_KEY=your_key_here
    ```
 
-### Docker Setup (Production)
+### Docker Setup
 
 Build the required Docker images:
 ```bash
@@ -165,8 +164,6 @@ ResearchGym includes multiple agent implementations. See [agents/README.md](agen
 |-------|-------------|
 | **[RGAgent](agents/RGAgent/README.md)** | Reference implementation using [inspect_ai](https://github.com/UKGovernmentBEIS/inspect_ai) with comprehensive tools |
 | **[InspectionAgent](agents/InspectionAgent/README.md)** | Post-run verification agent for detecting cheating/violations |
-| **ML-Master** | MCTS-based multi-agent tree search for research exploration | 
-| **AI-Scientist-v2** | Multi-worker evolutionary algorithm with code generation |
 | **ClaudeCode** | Claude Agent SDK wrapper | 
 | **Codex** | OpenAI Codex CLI wrapper |
 
@@ -179,25 +176,10 @@ RGAgent provides a comprehensive toolkit for autonomous research:
 | **Execution** | `bash()`, `python()` |
 | **File Ops** | `read_file_chunk()`, `search_file()`, `write_file()`, `replace()` |
 | **Background Jobs** | `start_async()`, `check_async()`, `cancel_async()` |
-| **Web** (optional) | `web_search()`, `web_browser()` |
+| **Web** | `web_search()`, `web_browser()` |
 | **Control** | `end_task()` |
 
 See [RGAgent README](agents/RGAgent/README.md) for full documentation.
-
-### Running Different Agents
-
-```bash
-# ML-Master
-python run_agent.py tasks/test/continual-learning ml-master \
-    --runtime docker \
-    --image researchgym-ml-master:latest
-
-# AI-Scientist-v2
-python run_agent.py tasks/test/continual-learning ai-scientist \
-    --runtime uv \
-    --ai_steps 10 \
-    --ai_workers 2
-```
 
 ### Inspecting Completed Runs
 
@@ -205,7 +187,7 @@ After runs complete, verify them for cheating/violations:
 
 ```bash
 # Inspect a single run
-python run_inspector.py results/continual-learning/001 --model openai/gpt-4o --budget 2.0
+python run_inspector.py results/continual-learning/001 --model openai/gpt-5 --budget 2.0
 
 # Dry run (show config without executing)
 python run_inspector.py results/continual-learning/001 --dry_run
@@ -213,7 +195,7 @@ python run_inspector.py results/continual-learning/001 --dry_run
 # Inspect all 001-003 runs for all tasks
 for task in continual-learning cross-modal-retrieval improving-replay-buffers materials-tokenization time-series-explanation; do
   for i in 001 002 003; do
-    python run_inspector.py results/$task/$i --model openai/gpt-4o
+    python run_inspector.py results/$task/$i --model openai/gpt-5
   done
 done
 ```
@@ -259,7 +241,8 @@ runs/2025-01-15/abc123/
    - Experimental Settings
    - Evaluation Metrics
    - Baseline Results (tables with scores to beat)
-   - Hints (optional)
+  
+   Optionally write idea_hint.txt
 
 3. Implement `grade.sh` to evaluate submissions and output scores.
 
@@ -329,4 +312,3 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guid
 - **New tasks**: Research problems from recent ML papers
 - **New agents**: Alternative agent architectures and scaffolding
 - **Evaluation**: Improved grading scripts and metrics
-- **Documentation**: Tutorials, examples, and guides
