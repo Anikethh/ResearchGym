@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResearchGym - Benchmark for Autonomous AI Research</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --teal: #12A8A7;
+            --light-teal: #CEF6ED;
+            --coral: #F28E8E;
+            --light-coral: #FBE3D7;
+            --bg: #FAFBFC;
+            --bg-card: #FFFFFF;
+            --text: #1F2937;
+            --text-secondary: #4B5563;
+            --border: #E5E7EB;
+            --grid: #D1D5DB;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        a {
+            color: var(--teal);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Header - Split Layout */
+        header {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 48px 0;
+        }
+
+        .header-grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .header-left h1 {
+            font-size: 2.75rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 12px;
+            line-height: 1.1;
+        }
+
+        .header-left h1 .gym {
+            color: var(--teal);
+        }
+
+        .header-left .tagline {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 24px;
+            max-width: 420px;
+        }
+
+        .header-left .key-point {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .key-point .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .key-point .dot.teal { background: var(--teal); }
+        .key-point .dot.coral { background: var(--coral); }
+
+        .header-right {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            min-width: 280px;
+        }
+
+        .stat-box {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-box .value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--teal);
+            line-height: 1;
+        }
+
+        .stat-box .value.coral {
+            color: var(--coral);
+        }
+
+        .stat-box .label {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-top: 6px;
+        }
+
+        .nav-links {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            font-size: 0.8rem;
+            padding-top: 8px;
+            border-top: 1px solid var(--border);
+            margin-top: 4px;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            padding: 4px 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--teal);
+            border-bottom-color: var(--teal);
+            text-decoration: none;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        /* Two Column Section */
+        .two-col {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 40px;
+            margin-bottom: 48px;
+        }
+
+        .section-header {
+            position: sticky;
+            top: 24px;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.01em;
+        }
+
+        .section-header p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .section-header .accent-line {
+            width: 40px;
+            height: 3px;
+            background: var(--teal);
+            margin-top: 16px;
+        }
+
+        .section-header .accent-line.coral {
+            background: var(--coral);
+        }
+
+        /* Task Cards */
+        .tasks-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .task-row {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px 24px;
+            display: grid;
+            grid-template-columns: 100px 1fr 200px 80px;
+            gap: 20px;
+            align-items: center;
+            transition: border-color 0.2s;
+        }
+
+        .task-row:hover {
+            border-color: var(--teal);
+        }
+
+        .task-domain {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--teal);
+            font-weight: 600;
+        }
+
+        .task-info h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .task-info p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .task-metrics {
+            text-align: right;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .task-metrics .metric {
+            margin-bottom: 2px;
+        }
+
+        .task-metrics .baseline {
+            color: var(--coral);
+            font-weight: 500;
+        }
+
+        .task-score {
+            text-align: right;
+        }
+
+        .task-score .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--teal);
+        }
+
+        .task-score .value.exceeded {
+            color: var(--coral);
+        }
+
+        .task-score .label {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        /* Agents Section */
+        .agents-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .agent-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px;
+            border-top: 3px solid var(--teal);
+        }
+
+        .agent-card:nth-child(2) {
+            border-top-color: var(--coral);
+        }
+
+        .agent-card:nth-child(3) {
+            border-top-color: var(--teal);
+        }
+
+        .agent-card h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .agent-card .model {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--teal);
+            margin-bottom: 12px;
+            padding: 4px 8px;
+            background: var(--light-teal);
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .agent-card:nth-child(2) .model {
+            color: var(--coral);
+            background: var(--light-coral);
+        }
+
+        .agent-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .agent-card .capabilities {
+            margin-top: 12px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .agent-card .capabilities span {
+            display: inline-block;
+            padding: 3px 8px;
+            background: var(--bg);
+            border-radius: 4px;
+            margin-right: 6px;
+            margin-bottom: 6px;
+        }
+
+        /* Architecture */
+        .arch-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .arch-diagram {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px;
+        }
+
+        .arch-layer {
+            padding: 14px 20px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .arch-layer.teal-bg {
+            background: var(--light-teal);
+            border-left: 3px solid var(--teal);
+        }
+
+        .arch-layer.coral-bg {
+            background: var(--light-coral);
+            border-left: 3px solid var(--coral);
+        }
+
+        .arch-layer .detail {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .arch-flow {
+            text-align: center;
+            color: var(--grid);
+            font-size: 1.2rem;
+            margin: 4px 0;
+        }
+
+        .arch-features {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px;
+        }
+
+        .feature-item {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 12px;
+        }
+
+        .feature-item:last-child {
+            border-bottom: none;
+        }
+
+        .feature-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--light-teal);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .feature-item:nth-child(even) .feature-icon {
+            background: var(--light-coral);
+        }
+
+        .feature-text h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .feature-text p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Citation */
+        .citation-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .paper-info {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--teal);
+            border-radius: 8px;
+            padding: 20px 24px;
+        }
+
+        .paper-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .paper-authors {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .paper-venue {
+            font-size: 0.85rem;
+            color: var(--teal);
+            font-weight: 500;
+        }
+
+        .bibtex-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .bibtex-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .copy-btn {
+            padding: 4px 12px;
+            background: var(--teal);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: #0e8786;
+        }
+
+        .bibtex-code {
+            margin: 0;
+            padding: 16px 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg-card);
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        /* Quick Start */
+        .quickstart-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .code-block {
+            background: #1e293b;
+            padding: 24px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            line-height: 1.8;
+            color: #e2e8f0;
+            overflow-x: auto;
+        }
+
+        .code-block .comment {
+            color: #64748b;
+        }
+
+        .code-block .cmd {
+            color: #4ade80;
+        }
+
+        .code-block .flag {
+            color: #38bdf8;
+        }
+
+        .code-block .value {
+            color: #fbbf24;
+        }
+
+        /* Footer */
+        footer {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        footer a {
+            color: var(--text-secondary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        /* Leaderboard */
+        .leaderboard-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .leaderboard {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .leaderboard th {
+            background: var(--bg);
+            padding: 12px 16px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .leaderboard th.rank-col { width: 50px; }
+        .leaderboard th.agent-col { text-align: left; width: 140px; }
+        .leaderboard th.model-col { text-align: left; width: 180px; }
+        .leaderboard th.avg-col { background: var(--light-teal); }
+
+        .leaderboard td {
+            padding: 14px 16px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .leaderboard tr:last-child td {
+            border-bottom: none;
+        }
+
+        .leaderboard tr:hover {
+            background: var(--bg);
+        }
+
+        .leaderboard .rank {
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
+        .leaderboard tr.rank-1 .rank {
+            color: var(--coral);
+            font-size: 1.1rem;
+        }
+
+        .leaderboard tr.rank-2 .rank,
+        .leaderboard tr.rank-3 .rank {
+            color: var(--teal);
+        }
+
+        .leaderboard .agent-name {
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .leaderboard .model-name {
+            text-align: left;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .leaderboard .score {
+            display: inline-block;
+            min-width: 45px;
+            padding: 4px 8px;
+            background: var(--light-teal);
+            border-radius: 4px;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        .leaderboard .score.exceeded {
+            background: var(--light-coral);
+            color: var(--coral);
+            font-weight: 700;
+        }
+
+        .leaderboard .score.dim {
+            background: var(--bg);
+            color: var(--grid);
+            font-style: italic;
+        }
+
+        .leaderboard .avg {
+            background: var(--light-teal);
+        }
+
+        .leaderboard .score-avg {
+            font-weight: 700;
+            color: var(--teal);
+            font-size: 1rem;
+        }
+
+        .leaderboard tr.rank-1 .score-avg {
+            color: var(--coral);
+        }
+
+        .leaderboard-legend {
+            padding: 12px 16px;
+            background: var(--bg);
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .leaderboard-legend strong {
+            color: var(--text);
+            margin-right: 4px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1000px) {
+            .header-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            .header-right {
+                min-width: auto;
+            }
+            .nav-links {
+                justify-content: flex-start;
+            }
+            .two-col {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .section-header {
+                position: static;
+            }
+            .task-row {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .task-metrics, .task-score {
+                text-align: left;
+            }
+            .agents-row, .arch-content {
+                grid-template-columns: 1fr;
+            }
+            .leaderboard {
+                font-size: 0.8rem;
+            }
+            .leaderboard th, .leaderboard td {
+                padding: 10px 8px;
+            }
+            .leaderboard .score {
+                padding: 2px 4px;
+                min-width: 38px;
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-grid">
+            <div class="header-left">
+                <h1>Research<span class="gym">Gym</span></h1>
+                <p class="tagline">A benchmark for evaluating LLM agents on autonomous, open-ended AI research tasks</p>
+                <div class="key-point">
+                    <span class="dot teal"></span>
+                    Tasks from ACL, ICML, ICLR 2024-2025 oral & spotlight papers
+                </div>
+                <div class="key-point">
+                    <span class="dot coral"></span>
+                    Agents run 12-24h autonomously with $10 budget constraint
+                </div>
+                <div class="key-point">
+                    <span class="dot teal"></span>
+                    Objective evaluation against SOTA baselines
+                </div>
+                <div class="key-point">
+                    <span class="dot coral"></span>
+                    Full research cycle: understand, design, implement, experiment
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="stat-box">
+                    <div class="value">5</div>
+                    <div class="label">Research Tasks</div>
+                </div>
+                <div class="stat-box">
+                    <div class="value coral">3</div>
+                    <div class="label">Agent Scaffolds</div>
+                </div>
+                <div class="stat-box">
+                    <div class="value">12-24h</div>
+                    <div class="label">Autonomous Runs</div>
+                </div>
+                <div class="stat-box">
+                    <div class="value coral">$10</div>
+                    <div class="label">Budget Cap</div>
+                </div>
+                <div class="nav-links">
+                    <a href="#leaderboard">Leaderboard</a>
+                    <a href="#tasks">Tasks</a>
+                    <a href="#agents">Agents</a>
+                    <a href="#citation">Cite</a>
+                    <a href="https://github.com/Anikethh/ResearchGym">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Leaderboard Section -->
+        <section class="two-col" id="leaderboard">
+            <div class="section-header">
+                <h2>Leaderboard</h2>
+                <p>Best scores normalized against state-of-the-art baselines. Higher is better, 100% = matches SOTA.</p>
+                <div class="accent-line coral"></div>
+            </div>
+            <div class="leaderboard-container">
+                <table class="leaderboard">
+                    <thead>
+                        <tr>
+                            <th class="rank-col">#</th>
+                            <th class="agent-col">Agent</th>
+                            <th class="model-col">Model</th>
+                            <th>CL</th>
+                            <th>MDT</th>
+                            <th>CMR</th>
+                            <th>TIM</th>
+                            <th>IRB</th>
+                            <th class="avg-col">Avg</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="rank-1">
+                            <td class="rank">1</td>
+                            <td class="agent-name">RG-Agent</td>
+                            <td class="model-name">gpt-5-high</td>
+                            <td><span class="score">94.3%</span></td>
+                            <td><span class="score">49.4%</span></td>
+                            <td><span class="score">96.3%</span></td>
+                            <td><span class="score exceeded">107.2%</span></td>
+                            <td><span class="score">34.3%</span></td>
+                            <td class="avg"><span class="score-avg">76.3%</span></td>
+                        </tr>
+                        <tr class="rank-2">
+                            <td class="rank">2</td>
+                            <td class="agent-name">Codex</td>
+                            <td class="model-name">gpt-5.2-codex xhigh</td>
+                            <td><span class="score">97.9%</span></td>
+                            <td><span class="score">49.0%</span></td>
+                            <td><span class="score">96.6%</span></td>
+                            <td><span class="score">17.1%</span></td>
+                            <td><span class="score">49.7%</span></td>
+                            <td class="avg"><span class="score-avg">62.1%</span></td>
+                        </tr>
+                        <tr class="rank-3">
+                            <td class="rank">3</td>
+                            <td class="agent-name">Claude Code</td>
+                            <td class="model-name">claude-opus-4.5</td>
+                            <td><span class="score">98.5%</span></td>
+                            <td><span class="score dim">--</span></td>
+                            <td><span class="score dim">--</span></td>
+                            <td><span class="score dim">--</span></td>
+                            <td><span class="score">21.7%</span></td>
+                            <td class="avg"><span class="score-avg">24.0%</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="leaderboard-legend">
+                    <span><strong>CL</strong> Continual Learning</span>
+                    <span><strong>MDT</strong> Materials Tokenization</span>
+                    <span><strong>CMR</strong> Cross-Modal Retrieval</span>
+                    <span><strong>TIM</strong> Time-Series Explanation</span>
+                    <span><strong>IRB</strong> Improving Replay Buffers</span>
+                    <span style="margin-left: auto; color: var(--text-secondary);">-- = no valid submission</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tasks Section -->
+        <section class="two-col" id="tasks">
+            <div class="section-header">
+                <h2>Research Tasks</h2>
+                <p>Each task mirrors the full ML research cycle: problem understanding, approach design, implementation, and experimentation with fixed compute.</p>
+                <div class="accent-line"></div>
+            </div>
+            <div class="tasks-list">
+                <div class="task-row">
+                    <div class="task-domain">Vision</div>
+                    <div class="task-info">
+                        <h3>Continual Learning</h3>
+                        <p>Scalable continual learning for foundation models without rehearsal. ImageNet-R/A, CIFAR-100, CUB-200.</p>
+                    </div>
+                    <div class="task-metrics">
+                        <div class="metric">Accuracy, AAA</div>
+                        <div class="baseline">Baseline: InfLoRA 86.75%</div>
+                    </div>
+                    <div class="task-score">
+                        <div class="value">91%</div>
+                        <div class="label">Peak SOTA</div>
+                    </div>
+                </div>
+                <div class="task-row">
+                    <div class="task-domain">Vision-Lang</div>
+                    <div class="task-info">
+                        <h3>Cross-Modal Retrieval</h3>
+                        <p>Query shift adaptation in cross-modal retrieval. COCO-C, Flickr-C with 16 image + 15 text corruptions.</p>
+                    </div>
+                    <div class="task-metrics">
+                        <div class="metric">Recall@1</div>
+                        <div class="baseline">Baseline: EATA 54.4%</div>
+                    </div>
+                    <div class="task-score">
+                        <div class="value">96%</div>
+                        <div class="label">Peak SOTA</div>
+                    </div>
+                </div>
+                <div class="task-row">
+                    <div class="task-domain">RL</div>
+                    <div class="task-info">
+                        <h3>Improving Replay Buffers</h3>
+                        <p>Memory systems for efficient experience replay. DeepMind Control Suite, OpenAI Gym environments.</p>
+                    </div>
+                    <div class="task-metrics">
+                        <div class="metric">Average Return</div>
+                        <div class="baseline">Baseline: SynthER 727</div>
+                    </div>
+                    <div class="task-score">
+                        <div class="value">34%</div>
+                        <div class="label">Peak SOTA</div>
+                    </div>
+                </div>
+                <div class="task-row">
+                    <div class="task-domain">NLP / Sci</div>
+                    <div class="task-info">
+                        <h3>Materials Tokenization</h3>
+                        <p>Domain-preserving tokenization for materials science. SciBERT backbone, MatSci-NLP benchmark.</p>
+                    </div>
+                    <div class="task-metrics">
+                        <div class="metric">Micro-F1, Macro-F1</div>
+                        <div class="baseline">Baseline: PickyBPE 75.6%</div>
+                    </div>
+                    <div class="task-score">
+                        <div class="value">48%</div>
+                        <div class="label">Peak SOTA</div>
+                    </div>
+                </div>
+                <div class="task-row">
+                    <div class="task-domain">XAI</div>
+                    <div class="task-info">
+                        <h3>Time-Series Explanation</h3>
+                        <p>Directionally-aware explanations for time series. PAM, Boiler, Epilepsy, Wafer, Freezer datasets.</p>
+                    </div>
+                    <div class="task-metrics">
+                        <div class="metric">CPD, AUP, AUR</div>
+                        <div class="baseline">Baseline: IG 0.573 CPD</div>
+                    </div>
+                    <div class="task-score">
+                        <div class="value exceeded">107%</div>
+                        <div class="label">Exceeded SOTA</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Agents Section -->
+        <section class="two-col" id="agents">
+            <div class="section-header">
+                <h2>Agent Scaffolds</h2>
+                <p>Three primary agent implementations with frontier model backends for comprehensive research capabilities.</p>
+                <div class="accent-line"></div>
+            </div>
+            <div class="agents-row">
+                <div class="agent-card">
+                    <h4>RG-Agent</h4>
+                    <span class="model">gpt-5-high</span>
+                    <p>Primary research agent with comprehensive tooling for file operations, code execution, and experiment management.</p>
+                    <div class="capabilities">
+                        <span>bash</span>
+                        <span>python</span>
+                        <span>file ops</span>
+                        <span>async jobs</span>
+                        <span>web search</span>
+                    </div>
+                </div>
+                <div class="agent-card">
+                    <h4>Codex</h4>
+                    <span class="model">gpt-5.2-codex xhigh</span>
+                    <p>Code-specialized agent optimized for implementation tasks, rapid prototyping, and iterative development.</p>
+                    <div class="capabilities">
+                        <span>code gen</span>
+                        <span>refactor</span>
+                        <span>debug</span>
+                        <span>testing</span>
+                    </div>
+                </div>
+                <div class="agent-card">
+                    <h4>Claude Code</h4>
+                    <span class="model">claude-opus-4.5</span>
+                    <p>Anthropic's agentic coding assistant with strong reasoning and multi-step planning capabilities.</p>
+                    <div class="capabilities">
+                        <span>reasoning</span>
+                        <span>planning</span>
+                        <span>analysis</span>
+                        <span>code</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture Section -->
+        <section class="two-col" id="architecture">
+            <div class="section-header">
+                <h2>Architecture</h2>
+                <p>Modular adapter pattern with unified interfaces for agents, runtimes, and evaluation systems.</p>
+                <div class="accent-line coral"></div>
+            </div>
+            <div class="arch-content">
+                <div class="arch-diagram">
+                    <div class="arch-layer teal-bg">
+                        <strong>Entry Point</strong>
+                        <span class="detail">CLI, Workspace, Resume</span>
+                    </div>
+                    <div class="arch-flow">↓</div>
+                    <div class="arch-layer coral-bg">
+                        <strong>Agent Adapters</strong>
+                        <span class="detail">prepare_workspace() → run()</span>
+                    </div>
+                    <div class="arch-flow">↓</div>
+                    <div class="arch-layer teal-bg">
+                        <strong>Runtime Systems</strong>
+                        <span class="detail">UV Local | Docker</span>
+                    </div>
+                    <div class="arch-flow">↓</div>
+                    <div class="arch-layer coral-bg">
+                        <strong>AgenticEnv</strong>
+                        <span class="detail">Gym-like Interface</span>
+                    </div>
+                </div>
+                <div class="arch-features">
+                    <div class="feature-item">
+                        <div class="feature-icon">💰</div>
+                        <div class="feature-text">
+                            <h4>Budget Enforcement</h4>
+                            <p>Real-time cost tracking with per-model pricing via LiteLLM</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔄</div>
+                        <div class="feature-text">
+                            <h4>Resume & Continuation</h4>
+                            <p>Session state preservation with transcript-based context recovery</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🐳</div>
+                        <div class="feature-text">
+                            <h4>Docker Isolation</h4>
+                            <p>Containerized execution with deterministic environments</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-text">
+                            <h4>Comprehensive Logging</h4>
+                            <p>Transcripts, cost summaries, and execution artifacts</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔒</div>
+                        <div class="feature-text">
+                            <h4>Workspace Security</h4>
+                            <p>Path-bounded file operations with process isolation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Citation Section -->
+        <section class="two-col" id="citation">
+            <div class="section-header">
+                <h2>Citation</h2>
+                <p>If you use ResearchGym in your research, please cite our paper.</p>
+                <div class="accent-line coral"></div>
+            </div>
+            <div class="citation-content">
+                <div class="paper-info">
+                    <div class="paper-title">ResearchGym: Evaluating Language Model Agents on Real-World AI Research</div>
+                    <div class="paper-authors">Aniketh Garikaparthi, Manasi Patwardhan, Arman Cohan</div>
+                    <div class="paper-venue">arXiv preprint, 2025</div>
+                </div>
+                <div class="bibtex-block">
+                    <div class="bibtex-header">
+                        <span>BibTeX</span>
+                        <button class="copy-btn" onclick="copyBibtex()">Copy</button>
+                    </div>
+                    <pre class="bibtex-code" id="bibtex">@misc{garikaparthi2025researchgym,
+  title={ResearchGym: Evaluating Language Model Agents on Real-World AI Research},
+  author={Aniketh Garikaparthi and Manasi Patwardhan and Arman Cohan},
+  year={2025},
+  eprint={2506.XXXXX},
+  archivePrefix={arXiv},
+  primaryClass={cs.LG}
+}</pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Start Section -->
+        <section class="two-col" id="quickstart">
+            <div class="section-header">
+                <h2>Quick Start</h2>
+                <p>Requires Python 3.12+ and uv package manager.</p>
+                <div class="accent-line"></div>
+            </div>
+            <div class="quickstart-content">
+                <div class="code-block" style="border-radius: 8px;">
+<span class="comment"># Clone and setup</span>
+<span class="cmd">git clone</span> https://github.com/Anikethh/ResearchGym.git
+<span class="cmd">cd</span> ResearchGym
+<span class="cmd">uv sync</span>
+
+<span class="comment"># Run an agent on a task</span>
+<span class="cmd">python</span> run_agent.py tasks/test/continual-learning rg-agent \
+    <span class="flag">--runtime</span> <span class="value">docker</span> \
+    <span class="flag">--model</span> <span class="value">openai/gpt-5-high</span> \
+    <span class="flag">--basic_hours</span> <span class="value">12</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div>ResearchGym &mdash; Benchmark for Autonomous AI Research</div>
+        <div class="footer-links">
+            <a href="https://github.com/Anikethh/ResearchGym">GitHub</a>
+            <a href="#citation">Paper</a>
+        </div>
+    </footer>
+    <script>
+        function copyBibtex() {
+            const bibtex = document.getElementById('bibtex').textContent;
+            navigator.clipboard.writeText(bibtex).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = 'Copy', 2000);
+            });
+        }
+    </script>
+</body>
+</html>
