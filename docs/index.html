@@ -62,24 +62,53 @@
             align-items: start;
         }
 
-        .header-left h1 {
-            font-size: 2.75rem;
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            margin-bottom: 12px;
-            line-height: 1.1;
+        .paper-eyebrow {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--teal);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 10px;
         }
 
-        .header-left h1 .gym {
+        .gym-eye {
+            color: var(--coral);
+        }
+
+        .header-left h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            line-height: 1.2;
+            max-width: 520px;
+        }
+
+        .authors {
+            font-size: 1rem;
+            margin-bottom: 6px;
+        }
+
+        .author {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .author sup {
+            font-size: 0.65em;
             color: var(--teal);
         }
 
-        .header-left .tagline {
-            font-size: 1.15rem;
+        .affiliations {
+            font-size: 0.85rem;
             color: var(--text-secondary);
-            font-weight: 400;
-            margin-bottom: 24px;
-            max-width: 420px;
+            margin-bottom: 20px;
+        }
+
+        .affiliations sup {
+            font-size: 0.65em;
+            color: var(--teal);
         }
 
         .header-left .key-point {
@@ -742,8 +771,19 @@
     <header>
         <div class="header-grid">
             <div class="header-left">
-                <h1>Research<span class="gym">Gym</span></h1>
-                <p class="tagline">A benchmark for evaluating LLM agents on autonomous, open-ended AI research tasks</p>
+                <div class="paper-eyebrow">Research<span class="gym-eye">Gym</span></div>
+                <h1>Evaluating Language Model Agents on Real-World AI Research</h1>
+                <div class="authors">
+                    <span class="author">Aniketh Garikaparthi<sup>1</sup></span>
+                    <span class="author-sep">&nbsp;&nbsp;</span>
+                    <span class="author">Manasi Patwardhan<sup>1</sup></span>
+                    <span class="author-sep">&nbsp;&nbsp;</span>
+                    <span class="author">Arman Cohan<sup>2</sup></span>
+                </div>
+                <div class="affiliations">
+                    <span><sup>1</sup>TCS Research</span>
+                    <span style="margin-left: 16px;"><sup>2</sup>Yale University</span>
+                </div>
                 <div class="key-point">
                     <span class="dot teal"></span>
                     Tasks from ACL, ICML, ICLR 2024-2025 oral & spotlight papers
