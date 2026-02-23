@@ -1,3 +1,4 @@
 *.pth filter=lfs diff=lfs merge=lfs -text
 * text=auto
-
+logs*.zip filter=lfs diff=lfs merge=lfs -text
+logs-compact.zip filter=lfs diff=lfs merge=lfs -text
