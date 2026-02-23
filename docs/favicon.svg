@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- background -->
+  <rect width="32" height="32" rx="8" fill="#FAFBFC"/>
+
+  <!-- bar sleeve left -->
+  <rect x="9" y="14.5" width="3" height="3" rx="0.5" fill="#9CA3AF"/>
+  <!-- bar -->
+  <rect x="12" y="15" width="8" height="2" rx="1" fill="#D1D5DB"/>
+  <!-- bar sleeve right -->
+  <rect x="20" y="14.5" width="3" height="3" rx="0.5" fill="#9CA3AF"/>
+
+  <!-- left weight plate outer -->
+  <rect x="4" y="10" width="5" height="12" rx="2.5" fill="#12A8A7"/>
+  <!-- left weight plate inner highlight -->
+  <rect x="5.5" y="12" width="2" height="8" rx="1" fill="#16BFBE" opacity="0.5"/>
+
+  <!-- right weight plate outer -->
+  <rect x="23" y="10" width="5" height="12" rx="2.5" fill="#F28E8E"/>
+  <!-- right weight plate inner highlight -->
+  <rect x="24.5" y="12" width="2" height="8" rx="1" fill="#F9A8A8" opacity="0.5"/>
+</svg>
