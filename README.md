@@ -313,17 +313,3 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guid
 - **New agents**: Alternative agent architectures and scaffolding
 - **Evaluation**: Improved grading scripts and metrics
 
-
-## Cite
-
-```
-@misc{garikaparthi2026researchgymevaluatinglanguagemodel,
-      title={ResearchGym: Evaluating Language Model Agents on Real-World AI Research}, 
-      author={Aniketh Garikaparthi and Manasi Patwardhan and Arman Cohan},
-      year={2026},
-      eprint={2602.15112},
-      archivePrefix={arXiv},
-      primaryClass={cs.AI},
-      url={https://arxiv.org/abs/2602.15112}, 
-}
-```
