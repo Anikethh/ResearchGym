@@ -49,7 +49,7 @@
         header {
             background: var(--bg-card);
             border-bottom: 1px solid var(--border);
-            padding: 48px 0;
+            padding: 40px 0 28px;
         }
 
         .header-grid {
@@ -59,17 +59,21 @@
             display: grid;
             grid-template-columns: 1fr auto;
             gap: 40px;
-            align-items: start;
+            align-items: stretch;
+        }
+
+        .header-left {
+            display: flex;
+            flex-direction: column;
         }
 
         .paper-eyebrow {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            font-weight: 600;
+            font-size: 2.75rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
             color: var(--teal);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            line-height: 1;
         }
 
         .gym-eye {
@@ -77,12 +81,20 @@
         }
 
         .header-left h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 16px;
-            line-height: 1.2;
-            max-width: 520px;
+            font-size: 1.1rem;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            margin-bottom: 0;
+            line-height: 1.4;
+            color: var(--text-secondary);
+        }
+
+        .header-divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 14px 0;
+            width: fit-content;
+            min-width: 460px;
         }
 
         .authors {
@@ -103,7 +115,7 @@
         .affiliations {
             font-size: 0.85rem;
             color: var(--text-secondary);
-            margin-bottom: 20px;
+            margin-bottom: 0;
         }
 
         .affiliations sup {
@@ -111,12 +123,13 @@
             color: var(--teal);
         }
 
-        .header-left .key-point {
+        .key-point {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-            font-size: 0.9rem;
+            gap: 8px;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            line-height: 1.3;
         }
 
         .key-point .dot {
@@ -132,14 +145,14 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
-            min-width: 280px;
+            min-width: 360px;
         }
 
         .stat-box {
             background: var(--bg);
             border: 1px solid var(--border);
             border-radius: 8px;
-            padding: 16px;
+            padding: 16px 20px;
             text-align: center;
         }
 
@@ -154,23 +167,60 @@
             color: var(--coral);
         }
 
+        .value-split {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 6px;
+            line-height: 1;
+        }
+
+        .value-split .primary {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--teal);
+        }
+
+        .value-split .primary.coral {
+            color: var(--coral);
+        }
+
+        .value-split .pipe {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: var(--grid);
+        }
+
+        .value-split .secondary {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
         .stat-box .label {
             font-size: 0.7rem;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 0.04em;
-            margin-top: 6px;
+            margin-top: 7px;
+        }
+
+        .key-points-grid {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 12px;
         }
 
         .nav-links {
-            grid-column: 1 / -1;
             display: flex;
             gap: 16px;
-            justify-content: center;
+            justify-content: flex-start;
             font-size: 0.8rem;
-            padding-top: 8px;
+            margin-top: auto;
+            padding-top: 14px;
             border-top: 1px solid var(--border);
-            margin-top: 4px;
+            align-self: flex-start;
         }
 
         .nav-links a {
@@ -773,6 +823,7 @@
             <div class="header-left">
                 <div class="paper-eyebrow">Research<span class="gym-eye">Gym</span></div>
                 <h1>Evaluating Language Model Agents on Real-World AI Research</h1>
+                <div class="header-divider"></div>
                 <div class="authors">
                     <span class="author">Aniketh Garikaparthi<sup>1</sup></span>
                     <span class="author-sep">&nbsp;&nbsp;</span>
@@ -784,46 +835,56 @@
                     <span><sup>1</sup>TCS Research</span>
                     <span style="margin-left: 16px;"><sup>2</sup>Yale University</span>
                 </div>
-                <div class="key-point">
-                    <span class="dot teal"></span>
-                    Tasks from ACL, ICML, ICLR 2024-2025 oral & spotlight papers
-                </div>
-                <div class="key-point">
-                    <span class="dot coral"></span>
-                    Agents run 12-24h autonomously with $10 budget constraint
-                </div>
-                <div class="key-point">
-                    <span class="dot teal"></span>
-                    Objective evaluation against SOTA baselines
-                </div>
-                <div class="key-point">
-                    <span class="dot coral"></span>
-                    Full research cycle: understand, design, implement, experiment
-                </div>
-            </div>
-            <div class="header-right">
-                <div class="stat-box">
-                    <div class="value">5</div>
-                    <div class="label">Research Tasks</div>
-                </div>
-                <div class="stat-box">
-                    <div class="value coral">3</div>
-                    <div class="label">Agent Scaffolds</div>
-                </div>
-                <div class="stat-box">
-                    <div class="value">12-24h</div>
-                    <div class="label">Autonomous Runs</div>
-                </div>
-                <div class="stat-box">
-                    <div class="value coral">$10</div>
-                    <div class="label">Budget Cap</div>
-                </div>
                 <div class="nav-links">
                     <a href="#leaderboard">Leaderboard</a>
                     <a href="#tasks">Tasks</a>
                     <a href="#agents">Agents</a>
                     <a href="#citation">Cite</a>
                     <a href="https://github.com/Anikethh/ResearchGym">GitHub</a>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="stat-box">
+                    <div class="value-split">
+                        <span class="primary">5</span>
+                        <span class="pipe">|</span>
+                        <span class="secondary">39</span>
+                    </div>
+                    <div class="label">Tasks · Sub-tasks</div>
+                </div>
+                <div class="stat-box">
+                    <div class="value-split">
+                        <span class="primary coral">3</span>
+                        <span class="pipe">|</span>
+                        <span class="secondary">3</span>
+                    </div>
+                    <div class="label">Scaffolds · Seeds</div>
+                </div>
+                <div class="stat-box">
+                    <div class="value">$10-$20</div>
+                    <div class="label">Budget per Run</div>
+                </div>
+                <div class="stat-box">
+                    <div class="value">12-24h</div>
+                    <div class="label">Autonomous Runs</div>
+                </div>
+                <div class="key-points-grid">
+                    <div class="key-point">
+                        <span class="dot teal"></span>
+                        ACL, ICML, ICLR oral &amp; spotlight
+                    </div>
+                    <div class="key-point">
+                        <span class="dot coral"></span>
+                        Objective SOTA evaluation
+                    </div>
+                    <div class="key-point">
+                        <span class="dot teal"></span>
+                        Runs on single GPU
+                    </div>
+                    <div class="key-point">
+                        <span class="dot coral"></span>
+                        Full ML research cycle
+                    </div>
                 </div>
             </div>
         </div>
