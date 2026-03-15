@@ -2,6 +2,10 @@
 
 **Evaluating LLM Agents on Open-Ended AI Research Tasks**
 
+> March 1, 2026: Accepted to the ICLR 2026 Agents in the Wild Workshop.
+>
+> [arXiv](https://arxiv.org/abs/2602.15112) | [Project Website](https://anikethh.github.io/ResearchGym/)
+
 ResearchGym is a benchmark for evaluating the ability of LLM agents to perform autonomous AI research. Unlike code completion or bug-fixing benchmarks, ResearchGym tasks require agents to understand research problems, design novel approaches, implement solutions, and run experiments, mirroring the full cycle of AI research.
 
 Each task provides a research problem statement, a pruned code repository (evaluation scripts, datasets, baselines—no solution code), and baseline scores to beat. Agents run autonomously for 12-24 hours with a fixed API budget and are evaluated on objective score improvements over baselines.

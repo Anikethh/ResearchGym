@@ -52,6 +52,27 @@
             padding: 40px 0 28px;
         }
 
+        .announcement-bar {
+            background: var(--light-teal);
+            border-bottom: 1px solid var(--border);
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+
+        .announcement-inner {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 10px 40px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .announcement-inner strong {
+            color: var(--teal);
+        }
+
         .header-grid {
             max-width: 1300px;
             margin: 0 auto;
@@ -818,6 +839,14 @@
     </style>
 </head>
 <body>
+    <div class="announcement-bar">
+        <div class="announcement-inner">
+            <strong>Announcement</strong>
+            <span>Accepted to the ICLR 2026 Agents in the Wild Workshop on March 1, 2026.</span>
+            <a href="https://arxiv.org/abs/2602.15112" target="_blank" rel="noopener noreferrer">arXiv</a>
+        </div>
+    </div>
+
     <header>
         <div class="header-grid">
             <div class="header-left">
@@ -1067,26 +1096,14 @@
                     </div>
                 </div>
                 <div class="agent-card">
-                    <h4>Codex</h4>
+                    <h4>OpenAI Scaffold</h4>
                     <span class="model">gpt-5.2-codex xhigh</span>
-                    <p>Code-specialized agent optimized for implementation tasks, rapid prototyping, and iterative development.</p>
-                    <div class="capabilities">
-                        <span>code gen</span>
-                        <span>refactor</span>
-                        <span>debug</span>
-                        <span>testing</span>
-                    </div>
+                    <p>OpenAI's coding scaffold used for the Codex-based runs in ResearchGym.</p>
                 </div>
                 <div class="agent-card">
-                    <h4>Claude Code</h4>
+                    <h4>Anthropic Scaffold</h4>
                     <span class="model">claude-opus-4.5</span>
-                    <p>Anthropic's agentic coding assistant with strong reasoning and multi-step planning capabilities.</p>
-                    <div class="capabilities">
-                        <span>reasoning</span>
-                        <span>planning</span>
-                        <span>analysis</span>
-                        <span>code</span>
-                    </div>
+                    <p>Anthropic's coding scaffold used for the Claude Code runs in ResearchGym.</p>
                 </div>
             </div>
         </section>
