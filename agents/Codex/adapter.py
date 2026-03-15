@@ -10,6 +10,7 @@ import os
 import shutil
 import subprocess
 import sys
+from importlib import metadata
 from pathlib import Path
 from typing import Any
 
@@ -218,6 +219,37 @@ class CodexAdapter:
 
         return env
 
+    def get_tool_versions(self) -> dict[str, str]:
+        """Best-effort capture of the external tool versions used for this run."""
+        versions: dict[str, str] = {}
+
+        try:
+            codex_path = shutil.which("codex")
+            if codex_path:
+                result = subprocess.run(
+                    [codex_path, "--version"],
+                    capture_output=True,
+                    text=True,
+                    timeout=10,
+                )
+                version_text = (result.stdout or result.stderr or "").strip()
+                if version_text:
+                    versions["codex_cli"] = version_text
+        except Exception:
+            pass
+
+        try:
+            versions["python"] = sys.version.split()[0]
+        except Exception:
+            pass
+
+        try:
+            versions["adapter_package"] = metadata.version("ResearchGym")
+        except Exception:
+            pass
+
+        return versions
+
     def run(
         self,
         cfg: CodexConfig,
@@ -267,6 +299,7 @@ class CodexAdapter:
                         if k in env_vars
                     },
                     "config": cfg.to_dict(),
+                    "tool_versions": self.get_tool_versions(),
                 },
             )
 
