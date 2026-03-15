@@ -2,7 +2,7 @@
 
 **Evaluating LLM Agents on Open-Ended AI Research Tasks**
 
-> March 1, 2026: Accepted to the ICLR 2026 Agents in the Wild Workshop.
+> March 1, 2026: Accepted to the ICLR 2026 Agents in the Wild Workshop 🎉
 >
 > [arXiv](https://arxiv.org/abs/2602.15112) | [Project Website](https://anikethh.github.io/ResearchGym/)
 
