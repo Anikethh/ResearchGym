@@ -66,7 +66,8 @@ except ImportError:
 from .config import ClaudeCodeConfig
 from .cost_tracker import CostTracker, BudgetExceeded, TimeLimitExceeded
 from .hooks import make_continue_hook, make_url_filter_hook, make_path_guard_hook, get_blocked_attempts
-from .messages import AUTONOMOUS_SYSTEM_PROMPT, get_continue_message
+from .messages import get_continue_message
+from ..shared_autonomous_prompt import render_autonomous_prompt
 
 logger = logging.getLogger(__name__)
 
@@ -224,7 +225,7 @@ def check_sdk_available() -> bool:
     return True
 
 
-def build_task_prompt(workspace_dir: Path) -> str:
+def build_task_prompt(workspace_dir: Path, time_hours: float) -> str:
     """Build the task prompt from workspace files.
 
     Args:
@@ -235,8 +236,14 @@ def build_task_prompt(workspace_dir: Path) -> str:
     """
     prompt_parts = []
 
-    # Add autonomous operation instructions
-    prompt_parts.append(AUTONOMOUS_SYSTEM_PROMPT.strip())
+    autonomous_prompt = render_autonomous_prompt(
+        type_of_processor="NVIDIA A100 80GB GPU",
+        max_time_in_hours=time_hours,
+        literature_line="Before finalizing your idea, you should perform a literature survey using the web search tool.\n- ",
+        hypothesis_line="This is a real research task, the proposed hypotheses should be novel, sound and feasible. You should spell out the details of the method you plan to implement, along with the motivation on why you think it will work.\n- ",
+        multiple_hypotheses_line="You can propose multiple hypotheses, run experiments and evaluate them using `grade.py`.\n- ",
+    )
+    prompt_parts.append(autonomous_prompt)
     prompt_parts.append("\n---\n")
 
     # Load task description
@@ -710,7 +717,7 @@ async def run_agent(
             )
             logger.warning("Resuming without transcript context (transcript not found)")
     else:
-        prompt = build_task_prompt(workspace_dir)
+        prompt = build_task_prompt(workspace_dir, config.time_hours)
 
     logger.info(f"Starting Claude Code agent run")
     logger.info(f"  Model: {config.model}")

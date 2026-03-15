@@ -17,12 +17,12 @@ from typing import Any
 from .config import CodexConfig, PROVIDER_AZURE, PROVIDER_SUBSCRIPTION, SANDBOX_DANGER_FULL_ACCESS, SANDBOX_WORKSPACE_WRITE, SANDBOX_BYPASS, generate_codex_config_toml
 from .cost_tracker import CodexCostTracker, BudgetExceeded
 from .messages import (
-    AUTONOMOUS_SYSTEM_PROMPT,
     DEFAULT_CONTINUE_MESSAGE,
     get_continue_message,
     get_periodic_status_message,
 )
 from .post_processor import post_process_output, write_violations
+from ..shared_autonomous_prompt import render_autonomous_prompt
 
 
 logger = logging.getLogger(__name__)
@@ -489,7 +489,11 @@ Please continue where you left off. Review your previous progress and proceed wi
 """
 
 
-def build_task_prompt(workspace_dir: Path, log_dir: Path | None = None) -> str:
+def build_task_prompt(
+    workspace_dir: Path,
+    time_hours: float,
+    log_dir: Path | None = None,
+) -> str:
     """Build the task prompt from workspace files.
 
     Args:
@@ -516,7 +520,15 @@ def build_task_prompt(workspace_dir: Path, log_dir: Path | None = None) -> str:
 
     # Build autonomous operation prompt
     resume_section = f"\n\n{resume_block}\n" if resume_block else "\n"
-    prompt = f"""{AUTONOMOUS_SYSTEM_PROMPT.strip()}{resume_section}
+    autonomous_prompt = render_autonomous_prompt(
+        type_of_processor="NVIDIA A100 80GB GPU",
+        max_time_in_hours=time_hours,
+        literature_line="Before finalizing your idea, you should perform a literature survey using the web search tool.\n- ",
+        hypothesis_line="This is a real research task, the proposed hypotheses should be novel, sound and feasible. You should spell out the details of the method you plan to implement, along with the motivation on why you think it will work.\n- ",
+        multiple_hypotheses_line="You can propose multiple hypotheses, run experiments and evaluate them using `grade.py`.\n- ",
+    )
+
+    prompt = f"""{autonomous_prompt}{resume_section}
 
 ## Working Directory
 Your working directory is: {input_dir}
@@ -1003,7 +1015,7 @@ def run_codex_cli(
         # =====================================================================
         # INITIAL RUN: Build full task prompt and run codex exec
         # =====================================================================
-        initial_prompt = build_task_prompt(run_workspace_dir, log_dir)
+        initial_prompt = build_task_prompt(run_workspace_dir, config.time_hours, log_dir)
         initial_cmd, stdin_prompt = build_codex_command(
             config=config,
             workspace_dir=run_workspace_dir,
