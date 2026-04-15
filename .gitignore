@@ -12,6 +12,7 @@ logs/
 !CONTRIBUTING.md
 !behaviour_documentation.md
 !agents/**/README.md
+!**/task_description.md
 results/
 openevolve/
 ConceptAttention/
