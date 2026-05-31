@@ -24,6 +24,8 @@ daam/
 *.ckpt
 # Large local datasets and weights (avoid staging GBs)
 dataset/
+!agents/**/inspect_ai/src/inspect_ai/dataset/
+!agents/**/inspect_ai/src/inspect_ai/dataset/**
 weights/
 *.tar.gz
 *.zip
